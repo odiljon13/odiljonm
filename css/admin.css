@@ -1,0 +1,252 @@
+/* Google fontidan zamonaviy va chiroyli 'Outfit' shriftini chaqirib olamiz */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* barcha elementlar uchun barcha standart bo'shliqlarni va chegaralarni tekislash (Reset) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* ================= BODY & KAFOLATLANADI ORQA FON ================= */
+body {
+    background: radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.12), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.15), transparent 25%),
+                linear-gradient(135deg, #0d1117 0%, #161b22 50%, #090c10 100%);
+    background-color: #0d1117;
+    background-attachment: fixed;
+    color: #e6edf3;
+    min-height: 100vh;
+    padding: 3rem 5%;
+    overflow-x: hidden;
+}
+
+/* Ochiq scrollbarni ham zamonaviy qilaveramiz */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: #0d1117;
+}
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #6366f1, #a855f7);
+    border-radius: 10px;
+}
+
+/* ================= MAIN HEADER (H1: BU Admin Panel) ================= */
+body > h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 3.5rem;
+    letter-spacing: -0.5px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #fff 0%, #a855f7 50%, #6366f1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 25px rgba(168, 85, 247, 0.35));
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+/* H1 pastiga yorqin chiziqcha va nuqta qo'shamiz (JS/HTMLga tegmay) */
+body > h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, #ec4899, #6366f1);
+    margin: 0.8rem auto 0;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.8);
+}
+
+/* ================= CONTAINER (GRID SYSTEM) ================= */
+#container {
+    display: grid;
+    /* Telefon, planshet va kompyuterga mukammal o'zini avto-moslovchi tarmoq */
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 0 3rem;
+}
+
+/* ================= HAR BIR FOYDALANUVCHI KARTI (#container > div) ================= */
+#container > div {
+    background: rgba(22, 27, 34, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 2.5rem 1.8rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+/* Kartalar ustiga borganda (Hover) kosmik neon effekt va ko'tarilishi */
+#container > div:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(99, 102, 241, 0.5);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.25);
+    background: rgba(30, 37, 48, 0.75);
+}
+
+/* Karta ichidagi yuqori chetiga yaltiroq nur chizib qo'yamiz */
+#container > div::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #6366f1, #a855f7, #ec4899, transparent);
+    transition: 0.5s;
+}
+#container > div:hover::before {
+    left: 100%;
+}
+
+/* ================= FOYDALANUVCHI RASMI (AVATAR) ================= */
+#container > div img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1.5rem;
+    /* Gradientli neon ramka yasash texnikasi */
+    border: 4px solid transparent;
+    background: linear-gradient(#161b22, #161b22) padding-box, 
+                linear-gradient(135deg, #6366f1, #ec4899) border-box;
+    box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Rasmni ustiga kelganda kattalashadi va aylantiriladi */
+#container > div:hover img {
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 12px 30px rgba(236, 72, 153, 0.4);
+}
+
+/* ================= CONTENT (.body INTERFEYSI) ================= */
+.body {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+/* Foydalanuvchi ismi (h1) */
+.body h1 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.2rem;
+    transition: color 0.3s;
+}
+#container > div:hover .body h1 {
+    color: #38bdf8;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+}
+
+/* Email manzili (.body > p) */
+.body p {
+    font-size: 0.95rem;
+    color: #94a3b8;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Yoshi (strong element) - Biz kodga tegishmasdan unga "Yoshi: " degan yozuvni qo'shamiz! */
+.body strong {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #d8b4fe;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(99, 102, 241, 0.15) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    padding: 0.45rem 1.5rem;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+}
+
+/* Kod o'zgarmasa ham CSS orqali sonning oldiga so'z qo'shish! */
+.body strong::before {
+    content: 'Yoshi: ';
+    color: #e2e8f0;
+    font-weight: 400;
+    margin-right: 5px;
+    opacity: 0.8;
+}
+
+#container > div:hover .body strong {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+    transform: scale(1.05);
+}
+
+/* ================= AVTOMATIK ANIMATSIYA (KARTALAR CHIQQANDA) ================= */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Har bir kartani bir-biridan keyingina chiqib keluvchi kaskad (waterfall) effekti */
+#container > div:nth-child(1)  { animation-delay: 0.05s; }
+#container > div:nth-child(2)  { animation-delay: 0.10s; }
+#container > div:nth-child(3)  { animation-delay: 0.15s; }
+#container > div:nth-child(4)  { animation-delay: 0.20s; }
+#container > div:nth-child(5)  { animation-delay: 0.25s; }
+#container > div:nth-child(6)  { animation-delay: 0.30s; }
+#container > div:nth-child(7)  { animation-delay: 0.35s; }
+#container > div:nth-child(8)  { animation-delay: 0.40s; }
+#container > div:nth-child(9)  { animation-delay: 0.45s; }
+#container > div:nth-child(10) { animation-delay: 0.50s; }
+
+/* ================= MOBIL TELEFONLAR VA EKRANLAR USCHUN ADAPTIVLIK ================= */
+@media (max-width: 768px) {
+    body {
+        padding: 2rem 4%;
+    }
+    
+    body > h1 {
+        margin-bottom: 2.5rem;
+    }
+    
+    #container {
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    
+    #container > div {
+        padding: 2rem 1.2rem 1.5rem;
+    }
+}
