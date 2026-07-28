@@ -1,104 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bosh sahifa | Odiljon Shop</title>
+    <title>Savatcha | Odiljon Shop</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/cart.css">
 </head>
 <body>
-<div class="loading_close">
-    <h1>Loading...</h1>
-</div>
     <header class="header">
-        <h1>odiljon</h1>
-        <input type="text" class="searchInp" placeholder="Mahsulotlarni qidiring...">
-        <select id="categorySelect" class="category-select">
-            <option value="all">Barcha toifalar</option>
-            <option value="beauty">Go'zallik (Beauty)</option>
-            <option value="fragrances">Parfumeriya</option>
-            <option value="furniture">Mebel (Furniture)</option>
-            <option value="groceries">Oziq-ovqat</option>
-            <option value="laptops">Noutbuklar</option>
-            <option value="smartphones">Smartfonlar</option>
-        </select>
-        <select name="" id="tanlov">
-            <option value="new">Qimmat</option>
-            <option value="old">Arzon</option>
-        </select>
-        <button id="openAddProductBtn" class="header-add-btn">
-            <i class="bi bi-plus-circle-fill"></i> Qo'shish
-        </button>
-        <a href="../html/wishlist.html" class="header-cart-btn" style="background: #fdf2f8; color: #ec4899;">
-            <i class="bi bi-heart-fill"></i> Saralanganlar 
-            <span id="wishlist-count-badge" style="background: #ec4899; color: white; padding: 2px 8px; border-radius: 12px; font-size: 13px;">0</span>
-        </a>
-        <a href="../html/orders.html" class="header-cart-btn" style="background: #eff6ff; color: #3b82f6;">
-            <i class="bi bi-box-seam-fill"></i> Buyurtmalarim
-        </a>
-        <a href="../html/cart.html" class="header-cart-btn">
-            <i class="bi bi-cart3"></i> Savatcha 
-            <span id="cart-count-badge">0</span>
-        </a>
-        <button id="themeToggleBtn" class="theme-btn" title="Rejimni o'zgartirish">
-            <i class="bi bi-moon-stars-fill"></i>
-        </button>
-        <button id="logout">Chiqish</button>
+        <h1><a href="../html/index.html" style="text-decoration: none; color: inherit;">odiljon</a></h1>
+        <div class="header-actions">
+            <a href="../html/index.html" class="nav-btn"><i class="bi bi-house-door"></i> Bosh sahifa</a>
+            <button id="logout">Chiqish</button>
+        </div>
     </header>
-    <div id="container">
-    </div>
 
-    <!-- Quick View Modal (Tezkor ko'rish) -->
-    <div class="g-pay-overlay" id="quickViewModal" style="display: none;">
-      <div class="g-pay-container" style="max-width: 600px; padding: 24px;">
-        <button class="g-pay-close-btn" id="closeQuickViewModal">&times;</button>
-        <div id="quickViewContent" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
-            <!-- Content loaded dynamically -->
+    <main class="cart-container">
+        <div class="cart-header-title">
+            <h2>🛒 Savatchamdagi mahsulotlar</h2>
+            <span id="items-count-badge">0 ta mahsulot</span>
         </div>
-      </div>
-    </div>
 
-    <!-- Mahsulot qo'shish modali -->
-    <div class="g-pay-overlay" id="addProductModal" style="display: none;">
-      <div class="g-pay-container" style="max-width: 480px;">
-        <button class="g-pay-close-btn" id="closeAddProductModal">&times;</button>
-        <div class="g-pay-header">
-          <h2 style="font-size: 20px; font-weight: 700; color: #1a1a1a;">➕ Yangi mahsulot qo'shish</h2>
+        <div class="cart-content-wrapper">
+            <div id="cart-list" class="cart-list">
+                <!-- Cart items will be loaded here dynamically -->
+            </div>
+
+            <aside class="cart-summary" id="cartSummary" style="display: none;">
+                <h3>Buyurtma xulosasi</h3>
+                <div class="summary-row">
+                    <span>Mahsulotlar soni:</span>
+                    <strong id="total-items">0 ta</strong>
+                </div>
+                <div class="summary-row">
+                    <span>Yetkazib berish:</span>
+                    <strong class="free-badge">Tekin</strong>
+                </div>
+                <hr class="summary-divider">
+                <div class="summary-row total">
+                    <span>Jami narx:</span>
+                    <strong id="total-price">$0</strong>
+                </div>
+                <button class="checkout-btn" id="buyAllBtn">
+                    <i class="bi bi-shield-lock"></i> Buyurtma berish / Sotib olish
+                </button>
+                <button class="clear-cart-btn" id="clearCartBtn">
+                    <i class="bi bi-trash3"></i> Savatchani bo'shatish
+                </button>
+            </aside>
         </div>
-        <form class="g-pay-form" id="addProductForm">
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Mahsulot nomi</span>
-              <input type="text" id="pTitleInp" placeholder="iPhone 15 Pro, Nike Krossovka..." required>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Narxi ($)</span>
-              <input type="number" id="pPriceInp" placeholder="99" required>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Rasm URL si</span>
-              <input type="url" id="pImgInp" placeholder="https://..." required>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Mahsulot ta'rifi</span>
-              <input type="text" id="pDescInp" placeholder="Ajoyib va sifatli mahsulot..." required>
-            </label>
-          </div>
-          <div class="g-pay-actions">
-            <button type="button" class="btn-cancel" id="cancelAddProductBtn">Bekor qilish</button>
-            <button type="submit" class="btn-pay" style="background: #6c2bd9;">Qo'shish va saqlash</button>
-          </div>
-        </form>
-      </div>
-    </div>
+    </main>
 
     <!-- Google Payments Style Checkout Modal -->
     <div class="g-pay-overlay" id="paymentModal" style="display: none;">
@@ -226,45 +180,6 @@
       </div>
     </div>
 
-    <!-- Telegram Live Support Chat Widget (@odiljon2213) -->
-    <div class="chat-widget-wrapper">
-        <button id="openChatBtn" class="chat-trigger-btn" title="Onlayn Yordam (Telegram)">
-            <i class="bi bi-telegram"></i>
-            <span class="chat-badge">1</span>
-        </button>
-
-        <div class="chat-box-card" id="chatBoxCard" style="display: none;">
-            <div class="chat-box-header">
-                <div class="chat-operator-info">
-                    <div class="operator-avatar">
-                        <i class="bi bi-person-fill-check"></i>
-                        <span class="online-indicator"></span>
-                    </div>
-                    <div>
-                        <h4>Odiljon Yordam Tizimi</h4>
-                        <span style="font-size: 11px; opacity: 0.9;">🟢 Onlayn • @odiljon2213</span>
-                    </div>
-                </div>
-                <button id="closeChatBtn" class="close-chat-btn">&times;</button>
-            </div>
-
-            <div class="chat-box-body" id="chatBoxBody">
-                <div class="chat-msg bot">
-                    Assalomu alaykum! 👋 Qanday savolingiz bor? Yozib yuboring, darhol Telegram orqali javob beraman!
-                </div>
-            </div>
-
-            <div class="chat-box-footer">
-                <input type="text" id="chatInput" placeholder="Savolingizni kiriting...">
-                <button id="sendChatBtn" class="send-chat-btn" title="Yuborish"><i class="bi bi-send-fill"></i></button>
-            </div>
-            
-            <a href="https://t.me/odiljon2213" target="_blank" class="direct-telegram-link">
-                <i class="bi bi-telegram"></i> Telegramda yozish (@odiljon2213)
-            </a>
-        </div>
-    </div>
-
-<script src="../js/index.js"></script>
+    <script src="../js/cart.js"></script>
 </body>
 </html>

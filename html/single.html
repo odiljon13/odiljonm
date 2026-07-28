@@ -11,26 +11,30 @@
     <link rel="stylesheet" href="../css/single.css">
 </head>
 <body>
+
+    <div class="loading_close">
+    <h1>Loading...</h1>
+</div>
     <div class="modal-close">
         <input type="text" placeholder="Mahsulot rasmi" class="editpicture">
         <input type="text" placeholder="Mahsulot Nomi" class="editTitle">
         <input type="text" placeholder="Mahsulot Narxi" class="editPrice">
         <input type="text" placeholder="Mahsulot Tarifi" class="editDesc">
-        <button class="editBtn">Yangilash</button>
+       <button class="editBtn">Yangilash</button>
 
-    </div><!--/.modal-close-->
+    </div>
     <button class="backPage">back</button>
-    <div class="single">
+   <div class="single">
         <button class="singleDelet" title="O'chirish" aria-label="O'chirish">
             <i class="bi bi-trash-fill"></i>
-        </button><!--/.singleDelet-->
-    <button class="singleUpdate" title="O'chirish" >
+        </button>
+   <button class="singleUpdate" title="O'chirish" >
     <i class="bi bi-pencil-fill"></i>
-        </button><!--/.singleUpdate-->
+        </button>
 
-        <div class="single-media">
+     <div class="single-media">
             <img src="" alt="" class="single_img">
-        </div><!--/.single-media-->
+        </div>
 
         <div class="single-body">
             <span class="single-eyebrow">Mahsulot kartasi</span>
@@ -39,16 +43,43 @@
 
             <div class="single-price-tag">
                 <strong class="single_price"></strong>
-            </div><!--/.single-price-tag-->
+            </div>
 
             <p class="single_text"></p>
 
             <div class="single-divider" aria-hidden="true"></div>
 
             <p class="single_desc"></p>
-        </div><!--/.single-body-->
+        </div>
 
-    </div><!--/.single-->
+   </div>
+
+   <div class="comments-container">
+        <div class="comments-header">
+            <h2>💬 Fikrlar va izohlar <span id="comments-count-badge">0</span></h2>
+            <div id="average-rating" class="average-rating">⭐️ 5.0 / 5</div>
+        </div>
+
+        <form id="commentForm" class="comment-form">
+            <h3>Izohingizni qoldiring</h3>
+            <div class="form-row">
+                <input type="text" id="commentName" placeholder="Ismingizni kiriting..." required>
+                <select id="commentRating" required>
+                    <option value="5">⭐️⭐️⭐️⭐️⭐️ (5 - A'lo)</option>
+                    <option value="4">⭐️⭐️⭐️⭐️ (4 - Yaxshi)</option>
+                    <option value="3">⭐️⭐️⭐️ (3 - Qoniqarli)</option>
+                    <option value="2">⭐️⭐️ (2 - Yomon emas)</option>
+                    <option value="1">⭐️ (1 - Yomon)</option>
+                </select>
+            </div>
+            <textarea id="commentText" placeholder="Mahsulot haqida o'z fikringiz va taassurotlaringizni yozing..." rows="4" required></textarea>
+            <button type="submit" class="submit-comment-btn"><i class="bi bi-send-fill"></i> Izoh yuborish</button>
+        </form>
+
+        <div id="commentsList" class="comments-list">
+            <!-- Dynamic comments appear here -->
+        </div>
+   </div>
 
     <script src="../js/single.js"></script>
 </body>

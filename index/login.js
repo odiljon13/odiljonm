@@ -9,47 +9,6 @@ let modalText = document.querySelector(".modal-text");
 let modalIcon = document.querySelector(".modal-icon");
 let modalClose = document.querySelector(".modal-close");
 
-// Toggle password visibility (ko'zcha tugmasi)
-let togglePasswordBtn = document.querySelector("#togglePasswordBtn");
-let eyeIcon = document.querySelector("#eyeIcon");
-
-if (togglePasswordBtn && parol && eyeIcon) {
-    togglePasswordBtn.addEventListener("click", () => {
-        let isPassword = parol.type === "password";
-        parol.type = isPassword ? "text" : "password";
-        eyeIcon.className = isPassword ? "bi bi-eye-fill" : "bi bi-eye-slash";
-    });
-}
-
-// Kun / Tun (Dark / Light Theme) Rejimi
-let themeToggleBtn = document.querySelector("#themeToggleBtn");
-let themeIcon = document.querySelector("#themeIcon");
-
-if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-theme");
-    if (themeIcon) themeIcon.className = "bi bi-sun-fill";
-} else if (localStorage.getItem("theme") === "light") {
-    document.body.classList.add("light-theme");
-    if (themeIcon) themeIcon.className = "bi bi-moon-stars-fill";
-}
-
-if (themeToggleBtn) {
-    themeToggleBtn.addEventListener("click", () => {
-        let isDark = document.body.classList.contains("dark-theme");
-        if (isDark) {
-            document.body.classList.remove("dark-theme");
-            document.body.classList.add("light-theme");
-            localStorage.setItem("theme", "light");
-            if (themeIcon) themeIcon.className = "bi bi-moon-stars-fill";
-        } else {
-            document.body.classList.remove("light-theme");
-            document.body.classList.add("dark-theme");
-            localStorage.setItem("theme", "dark");
-            if (themeIcon) themeIcon.className = "bi bi-sun-fill";
-        }
-    });
-}
-
 function showModal(title, text, type = "error") {
     modalTitle.textContent = title;
     modalText.textContent = text;
@@ -112,28 +71,18 @@ send.addEventListener("click", (e) => {
         .then((data) => {
             closeLoading.className = "loading_close";
 
-            if (data.accessToken || user.username === "emilys" || user.username === "odiljon") {
+            if (data.accessToken) {
                 showModal("Tabriklaymiz", "Siz tizimga muvaffaqiyatli kirdingiz", "success");
                 localStorage.setItem("user", JSON.stringify(user));
                 setTimeout(() => {
                     window.location.href = "../html/index.html";
                 }, 1500);
             } else {
-                // Fallback login for any username/password entered
-                showModal("Tabriklaymiz", `Xush kelibsiz, ${user.username}!`, "success");
-                localStorage.setItem("user", JSON.stringify(user));
-                setTimeout(() => {
-                    window.location.href = "../html/index.html";
-                }, 1500);
+                showModal("Xatolik", "Login yoki parol noto'g'ri kiritildi", "error");
             }
         })
         .catch(() => {
             closeLoading.className = "loading_close";
-            // Local fallback login if API is unreachable
-            showModal("Tabriklaymiz", `Xush kelibsiz, ${user.username}!`, "success");
-            localStorage.setItem("user", JSON.stringify(user));
-            setTimeout(() => {
-                window.location.href = "../html/index.html";
-            }, 1500);
+            showModal("Xatolik", "Server bilan bog'lanishda muammo yuz berdi", "error");
         });
 });

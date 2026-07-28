@@ -1,0 +1,277 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: #f5f5fa;
+  color: #1a1a1a;
+}
+
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 40px;
+  background: #ffffff;
+  border-bottom: 1px solid #ececf2;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header h1 {
+  color: #6c2bd9;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-right: 16px;
+}
+
+.searchInp {
+  flex: 1;
+  min-width: 200px;
+  max-width: 480px;
+  padding: 12px 18px;
+  border: 1.5px solid #ececf2;
+  border-radius: 12px;
+  outline: none;
+  font-size: 14px;
+  background: #f5f5fa;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.searchInp::placeholder {
+  color: #9b9bb0;
+}
+
+.searchInp:focus {
+  border-color: #6c2bd9;
+  background: #ffffff;
+}
+
+#tanlov {
+  padding: 12px 16px;
+  border: 1.5px solid #ececf2;
+  border-radius: 12px;
+  background: #f5f5fa;
+  font-size: 14px;
+  color: #1a1a1a;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+#tanlov:focus,
+#tanlov:hover {
+  border-color: #6c2bd9;
+}
+
+#logout {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  background: #6c2bd9;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  white-space: nowrap;
+}
+
+#logout:hover {
+  background: #5a20b8;
+  transform: translateY(-1px);
+}
+
+#logout:active {
+  transform: translateY(0);
+}
+
+/* ===== PRODUCTS CONTAINER ===== */
+#container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  padding: 28px 40px 60px;
+  max-width: 1440px;
+  margin: 0 auto;
+  z-index: 0;
+
+}
+
+#container > div {
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #f0f0f5;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#container > div:hover {
+  box-shadow: 0 8px 24px rgba(108, 43, 217, 0.12);
+  transform: translateY(-3px);
+}
+
+#container > div > a {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f5f5fa;
+}
+
+#container > div > a img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  transition: transform 0.3s ease;
+}
+
+#container > div:hover a img {
+  transform: scale(1.06);
+}
+
+.body {
+  padding: 12px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 6px;
+}
+
+.body h1 {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 38px;
+}
+
+.body strong {
+  color: #1a1a1a;
+  font-size: 17px;
+  font-weight: 800;
+  order: -1;
+}
+
+.body p {
+  font-size: 12px;
+  color: #9b9bb0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.body button {
+  margin-top: 8px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 10px;
+  background: #f0e6fb;
+  color: #6c2bd9;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.body button:hover {
+  background: #6c2bd9;
+  color: #ffffff;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f5f5fa;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4c4f0;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6c2bd9;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header {
+    padding: 12px 20px;
+  }
+
+  #container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 14px 16px;
+  }
+
+
+  .header h1 {
+    text-align: center;
+    margin-right: 0;
+  }
+
+  .searchInp,
+  #tanlov,
+  #logout {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  #container {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .body h1 {
+    font-size: 12.5px;
+  }
+
+  .body strong {
+    font-size: 15px;
+  }
+}
+.loading_parent {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.loading_close{
+  display: none;
+}

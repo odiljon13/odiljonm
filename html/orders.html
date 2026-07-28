@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyurtmalarim | Odiljon Shop</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/orders.css">
+</head>
+<body>
+    <header class="header">
+        <h1><a href="../html/index.html" style="text-decoration: none; color: inherit;">odiljon</a></h1>
+        <div class="header-actions">
+            <a href="../html/index.html" class="nav-btn"><i class="bi bi-house-door"></i> Bosh sahifa</a>
+            <a href="../html/wishlist.html" class="nav-btn" style="background: #fdf2f8; color: #ec4899;"><i class="bi bi-heart-fill"></i> Saralanganlar</a>
+            <a href="../html/orders.html" class="nav-btn" style="background: #eff6ff; color: #3b82f6;"><i class="bi bi-box-seam-fill"></i> Buyurtmalarim</a>
+            <a href="../html/cart.html" class="nav-btn"><i class="bi bi-cart3"></i> Savatcha</a>
+            <button id="logout">Chiqish</button>
+        </div>
+    </header>
+
+    <main class="orders-container">
+        <div class="orders-header-title">
+            <h2>📦 Buyurtmalarim tarixi</h2>
+            <span id="orders-badge">0 ta buyurtma</span>
+        </div>
+
+        <div id="orders-list" class="orders-list">
+            <!-- Orders appear here -->
+        </div>
+    </main>
+
+    <!-- Chek / Invoys ko'rish Modali -->
+    <div class="g-pay-overlay" id="invoiceModal" style="display: none;">
+      <div class="g-pay-container" style="max-width: 580px; padding: 0; background: transparent; box-shadow: none;">
+        <div class="invoice-paper" id="invoicePaper">
+            <button class="g-pay-close-btn" id="closeInvoiceModal">&times;</button>
+            <div class="invoice-header">
+                <div class="invoice-logo">⚡ Odiljon Shop</div>
+                <div class="invoice-title">RASMIY XARID CHEKI</div>
+            </div>
+            <div class="invoice-meta">
+                <div>
+                    <span>Chek raqami:</span> <strong id="invId">#000000</strong>
+                </div>
+                <div>
+                    <span>Sana:</span> <strong id="invDate">2026-07-28</strong>
+                </div>
+                <div>
+                    <span>Xaridor:</span> <strong id="invUser">Odiljon</strong>
+                </div>
+            </div>
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>Mahsulot</th>
+                        <th>Soni</th>
+                        <th>Narxi</th>
+                        <th>Jami</th>
+                    </tr>
+                </thead>
+                <tbody id="invItemsList">
+                    <!-- Invoice items -->
+                </tbody>
+            </table>
+            <div class="invoice-summary-box">
+                <div class="inv-row"><span>Yetkazib berish:</span> <strong>Tekin (0$)</strong></div>
+                <div class="inv-row"><span>QQS (0%):</span> <strong>$0.00</strong></div>
+                <hr style="border: none; border-top: 1px dashed #cbd5e1; margin: 8px 0;">
+                <div class="inv-row total"><span>JAMI TO'LOV:</span> <strong id="invTotalCost">$0.00</strong></div>
+            </div>
+            <div class="invoice-footer">
+                <p>Xaridingiz uchun rahmat! Odiljon Shop platformasi.</p>
+                <div class="invoice-actions">
+                    <button class="btn-print-inv" onclick="window.print()"><i class="bi bi-printer-fill"></i> Chop etish (Print)</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../js/orders.js"></script>
+</body>
+</html>
