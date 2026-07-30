@@ -9,6 +9,13 @@ let tarifi = document.querySelector(".single_desc");
 let delet = document.querySelector(".singleDelet");
 let update = document.querySelector(".singleUpdate");
 
+// Xavfsizlik: Oddiy foydalanuvchilarga mahsulotni o'chirish va tahrirlash tugmalarini yashirish
+let isCurrentAdmin = JSON.parse(localStorage.getItem("admin"));
+if (!isCurrentAdmin) {
+    if (delet) delet.style.display = "none";
+    if (update) update.style.display = "none";
+}
+
 let editI = document.querySelector(".editpicture");
 let editN = document.querySelector(".editTitle");
 let editP = document.querySelector(".editPrice");
