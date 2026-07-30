@@ -104,6 +104,7 @@ function getdata(item){
 
         let $newDiv = document.createElement("div");
         $newDiv.className = "product-card";
+        let singleUrl = window.location.pathname.includes("/html/") ? "single.html" : "./html/single.html";
         $newDiv.innerHTML = `
             <span class="discount-badge">-${discount}%</span>
             ${i.badge ? `<span class="uzum-tag-badge">${i.badge}</span>` : ''}
@@ -113,7 +114,7 @@ function getdata(item){
             <button class="quickview-btn" onclick="openQuickView(${i.id}, event)" title="Tezkor ko'rish">
                 <i class="bi bi-eye-fill"></i>
             </button>
-            <a href="../html/single.html?product-id=${i.id}" class="product-img-wrapper">
+            <a href="${singleUrl}?product-id=${i.id}" class="product-img-wrapper">
                 <img src="${productImages[0]}" alt="${i.title}" class="product-main-img">
                 ${productImages.length > 1 ? `
                     <div class="slider-dots">
