@@ -215,6 +215,10 @@ if (btnEdit && closeModal) {
 
 if (backBtn) {
     backBtn.addEventListener("click", ()=>{
-        window.location.href = "../html/index.html";
+        if (window.history.length > 1) {
+            window.history.back();
+        } else {
+            window.location.href = window.location.pathname.includes("/html/") ? "index.html" : "./index.html";
+        }
     });
 }
