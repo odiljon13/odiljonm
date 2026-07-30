@@ -17,6 +17,7 @@ let btnEdit = document.querySelector(".editBtn");
 let backBtn = document.querySelector(".backPage");
 let closeModal = document.querySelector(".modal-close");
 let closeLoading = document.querySelector(".loading_close");
+
 if (closeLoading) closeLoading.className = "loading_parent";
 
 // Comment Section Elements
@@ -37,23 +38,28 @@ if ($commentName && savedUser) {
     else if (savedUser.email) $commentName.value = savedUser.email.split("@")[0];
     else if (typeof savedUser === "string") $commentName.value = savedUser;
 } else if ($commentName) {
-    $commentName.value = "Odiljon";
+    $commentName.value = "Mehmon Foydalanuvchi";
 }
 
-fetch(`https://dummyjson.com/products/${id}`)
-.then(res=>res.json())
-.then(data=>{
-    currentProduct = data;
-    getsingle(data);
-    renderComments(data.reviews || []);
-    if (closeLoading) closeLoading.className = "loading_close";
-});
+// Load product from Uzum Market localStorage dataset
+let allProds = typeof getStoredUzumProducts === "function" ? getStoredUzumProducts() : (JSON.parse(localStorage.getItem("uzum_products")) || []);
+currentProduct = allProds.find(p => p.id == id) || allProds[0];
+
+if (currentProduct) {
+    getsingle(currentProduct);
+    renderComments(currentProduct.reviews || []);
+}
+if (closeLoading) closeLoading.className = "loading_close";
 
 function getsingle(item){
-    if (img) img.src = `${item.thumbnail}`;
+    if (!item) return;
+    let mainImgUrl = (item.images && item.images[0]) ? item.images[0] : (item.thumbnail || "");
+    if (img) img.src = mainImgUrl;
     if (nomi) nomi.innerHTML = `${item.title}`;
-    if (narxi) narxi.innerHTML = `$${item.price}`;
-    if (rating) rating.innerHTML = `⭐️ Rating: ${item.rating} / 5`;
+    
+    let priceFormatted = typeof formatSum === "function" ? formatSum(item.price) : `${item.price} so'm`;
+    if (narxi) narxi.innerHTML = `${priceFormatted}`;
+    if (rating) rating.innerHTML = `⭐️ Rating: ${item.rating || 4.9} / 5 (${item.reviewsCount || 12} ta sharh)`;
     if (tarifi) tarifi.innerHTML = `${item.description}`;
 }
 
@@ -66,18 +72,18 @@ function renderComments(apiReviews){
     if (!$commentsList) return;
     
     let storedReviews = getStoredReviews();
-    let allReviews = [...storedReviews, ...apiReviews];
+    let allReviews = [...storedReviews, ...(apiReviews || [])];
     
     $commentsList.innerHTML = "";
     if (allReviews.length === 0) {
         $commentsList.innerHTML = `
-            <div class="empty-comments">
+            <div class="empty-comments" style="padding: 20px; text-align: center; color: #94a3b8;">
                 <i class="bi bi-chat-dots" style="font-size: 2rem; display: block; margin-bottom: 10px; color: #94a3b8;"></i>
                 Hozircha izohlar mavjud emas. Birinchi bo'lib o'z fikringizni bildiring! ✨
             </div>
         `;
         if ($commentsBadge) $commentsBadge.textContent = "0";
-        if ($avgRating) $avgRating.textContent = "⭐️ 0 / 5";
+        if ($avgRating) $avgRating.textContent = "⭐️ 5.0 / 5";
         return;
     }
     
@@ -87,7 +93,7 @@ function renderComments(apiReviews){
         totalStar += stars;
         let starSymbols = "⭐️".repeat(stars);
         
-        let initial = rev.reviewerName ? rev.reviewerName.charAt(0).toUpperCase() : "O";
+        let initial = rev.reviewerName ? rev.reviewerName.charAt(0).toUpperCase() : "U";
         let dateStr = rev.date && rev.date.includes("T") ? rev.date.split("T")[0] : (rev.date || "Bugun");
         
         let card = document.createElement("div");
@@ -113,13 +119,13 @@ function renderComments(apiReviews){
     let avg = (totalStar / allReviews.length).toFixed(1);
     if ($commentsBadge) $commentsBadge.textContent = allReviews.length;
     if ($avgRating) $avgRating.textContent = `⭐️ ${avg} / 5`;
-    if (rating) rating.innerHTML = `⭐️ Rating: ${avg} / 5 (${allReviews.length} izoh)`;
+    if (rating) rating.innerHTML = `⭐️ Rating: ${avg} / 5 (${allReviews.length} ta sharh)`;
 }
 
 if ($commentForm) {
     $commentForm.addEventListener("submit", (e)=>{
         e.preventDefault();
-        let nameVal = $commentName ? $commentName.value.trim() : "Odiljon";
+        let nameVal = $commentName ? $commentName.value.trim() : "Foydalanuvchi";
         let rateVal = $commentRating ? Number($commentRating.value) : 5;
         let textVal = $commentText ? $commentText.value.trim() : "";
         
@@ -133,7 +139,7 @@ if ($commentForm) {
         };
         
         let stored = getStoredReviews();
-        stored.unshift(newReview); // yangi izoh tepada chiqishi uchun
+        stored.unshift(newReview);
         localStorage.setItem(`product_reviews_${id}`, JSON.stringify(stored));
         
         if ($commentText) $commentText.value = "";
@@ -142,22 +148,21 @@ if ($commentForm) {
         alert("✅ Izohingiz va fikringiz muvaffaqiyatli qo'shildi!");
     });
 }
-// =============================================================
 
+// Delete product from Uzum dataset
 if (delet) {
     delet.addEventListener("click", ()=>{
-        fetch(`https://dummyjson.com/products/${id}`,{
-            method:"DELETE"
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            if(data){
-                alert("Siz Mahsulotni o'chirdingiz");
-                setTimeout(()=>{
-                    window.location.href = "../html/index.html";
-                },1500);
+        if (confirm("Ushbu mahsulotni o'chirishni tasdiqlaysizmi?")) {
+            let list = typeof getStoredUzumProducts === "function" ? getStoredUzumProducts() : (JSON.parse(localStorage.getItem("uzum_products")) || []);
+            list = list.filter(p => p.id != id);
+            if (typeof saveUzumProducts === "function") {
+                saveUzumProducts(list);
+            } else {
+                localStorage.setItem("uzum_products", JSON.stringify(list));
             }
-        });
+            alert("✅ Mahsulot o'chirildi");
+            window.location.href = "../html/index.html";
+        }
     });
 }
 
@@ -166,7 +171,7 @@ if (update && closeModal) {
         closeModal.className = "modal";  
         if (editI && img) editI.value = img.src;
         if (editN && nomi) editN.value = nomi.textContent;
-        if (editP && narxi) editP.value = narxi.textContent.replace("$","");
+        if (editP && narxi) editP.value = currentProduct ? currentProduct.price : "";
         if (editD && tarifi) editD.value = tarifi.textContent;
     });
 }
@@ -175,23 +180,32 @@ if (btnEdit && closeModal) {
     btnEdit.addEventListener("click", ()=>{
         let uPicture = editI ? editI.value : "";
         let uName = editN ? editN.value : "";
-        let uPrice = editP ? editP.value : "";
-        let uDesciription = editD ? editD.value : "";
-        let editObj = {
-            thumbnail: uPicture,
-            title: uName,
-            price: uPrice,
-            description: uDesciription
-        }; 
-        fetch(`https://dummyjson.com/products/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(editObj)
-        })
-        .then(res => res.json())
-        .then(data=>{
-            getsingle(data);
-        });
+        let uPrice = editP ? Number(editP.value) : (currentProduct ? currentProduct.price : 100000);
+        let uDescription = editD ? editD.value : "";
+
+        let list = typeof getStoredUzumProducts === "function" ? getStoredUzumProducts() : (JSON.parse(localStorage.getItem("uzum_products")) || []);
+        let idx = list.findIndex(p => p.id == id);
+        
+        if (idx !== -1) {
+            list[idx].title = uName;
+            list[idx].price = uPrice;
+            list[idx].monthlyPrice = Math.round(uPrice / 12);
+            list[idx].thumbnail = uPicture;
+            if(!list[idx].images) list[idx].images = [uPicture];
+            else list[idx].images[0] = uPicture;
+            list[idx].description = uDescription;
+
+            if (typeof saveUzumProducts === "function") {
+                saveUzumProducts(list);
+            } else {
+                localStorage.setItem("uzum_products", JSON.stringify(list));
+            }
+
+            currentProduct = list[idx];
+            getsingle(currentProduct);
+            alert("✅ Mahsulot tahrirlandi!");
+        }
+
         closeModal.className = "modal-close";  
     });
 }

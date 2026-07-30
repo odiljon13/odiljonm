@@ -106,6 +106,7 @@ body {
 
 }
 
+.product-card,
 #container > div {
   background: #ffffff;
   border-radius: 14px;
@@ -115,31 +116,76 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+  height: 100%;
 }
 
+.product-card:hover,
 #container > div:hover {
   box-shadow: 0 8px 24px rgba(108, 43, 217, 0.12);
   transform: translateY(-3px);
 }
 
-#container > div > a {
+.product-img-wrapper,
+#container div a.product-img-wrapper {
   display: block;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: hidden;
   background: #f5f5fa;
+  position: relative;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
-#container > div > a img {
+.product-img-wrapper img.product-main-img,
+#container div a.product-img-wrapper img.product-main-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
   padding: 12px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.2s ease;
 }
 
-#container > div:hover a img {
-  transform: scale(1.06);
+.product-card:hover .product-img-wrapper img.product-main-img,
+#container div:hover a.product-img-wrapper img.product-main-img {
+  transform: scale(1.05);
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  z-index: 4;
+  padding: 3px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  border-radius: 10px;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.product-card:hover .slider-dots,
+#container > div:hover .slider-dots {
+  opacity: 1;
+}
+
+.slider-dots .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: all 0.25s ease;
+}
+
+.slider-dots .dot.active {
+  width: 16px;
+  border-radius: 4px;
+  background: #ffffff;
 }
 
 .body {
@@ -763,6 +809,55 @@ body.dark-theme .body strong {
   font-size: 12px;
   z-index: 5;
   box-shadow: 0 2px 6px rgba(239, 68, 68, 0.3);
+}
+
+.uzum-tag-badge {
+  position: absolute;
+  top: 36px;
+  left: 10px;
+  background: #7000ff;
+  color: white;
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-weight: 700;
+  font-size: 11px;
+  z-index: 5;
+  box-shadow: 0 2px 6px rgba(112, 0, 255, 0.3);
+}
+
+.uzum-installment-badge {
+  display: inline-block;
+  background: #ffea00;
+  color: #1f1f1f;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-top: 4px;
+  width: fit-content;
+}
+
+.uzum-price-box {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 4px;
+}
+
+.uzum-old-price {
+  font-size: 12px;
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.uzum-main-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #7000ff;
+}
+
+body.dark-theme .uzum-main-price {
+  color: #a855f7 !important;
 }
 
 .wishlist-btn {
