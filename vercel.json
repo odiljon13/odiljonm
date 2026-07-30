@@ -1,6 +1,4 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/", "destination": "/html/index.html" }
-  ]
+  "version": 2,
+  "cleanUrls": true
 }

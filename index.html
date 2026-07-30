@@ -2,13 +2,281 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=./html/index.html">
-    <title>Odiljon Shop | Uzum Market</title>
-    <script>
-        window.location.href = "./html/index.html";
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bosh sahifa | Odiljon Shop (Uzum Market)</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
-    <p>Yuklanmoqda... <a href="./html/index.html">Bosh sahifaga o'tish</a></p>
+<div class="loading_close">
+    <h1>Loading...</h1>
+</div>
+    <header class="header">
+        <h1>odiljon</h1>
+        <input type="text" class="searchInp" placeholder="Mahsulotlarni qidiring...">
+        <select id="categorySelect" class="category-select">
+            <option value="all">Barcha toifalar</option>
+            <option value="Elektronika">Elektronika</option>
+            <option value="Maishiy texnika">Maishiy texnika</option>
+            <option value="Kiyim-kechak">Kiyim-kechak</option>
+            <option value="Go'zallik va parvarish">Go'zallik va parvarish</option>
+            <option value="Uy-ro'zg'or buyumlari">Uy-ro'zg'or buyumlari</option>
+        </select>
+        <select name="" id="tanlov">
+            <option value="new">Qimmat</option>
+            <option value="old">Arzon</option>
+        </select>
+        <button id="openAddProductBtn" class="header-add-btn">
+            <i class="bi bi-plus-circle-fill"></i> Qo'shish
+        </button>
+        <a href="./html/wishlist.html" class="header-cart-btn" style="background: #fdf2f8; color: #ec4899;">
+            <i class="bi bi-heart-fill"></i> Saralanganlar 
+            <span id="wishlist-count-badge" style="background: #ec4899; color: white; padding: 2px 8px; border-radius: 12px; font-size: 13px;">0</span>
+        </a>
+        <a href="./html/orders.html" class="header-cart-btn" style="background: #eff6ff; color: #3b82f6;">
+            <i class="bi bi-box-seam-fill"></i> Buyurtmalarim
+        </a>
+        <a href="./html/cart.html" class="header-cart-btn">
+            <i class="bi bi-cart3"></i> Savatcha 
+            <span id="cart-count-badge">0</span>
+        </a>
+        <button id="themeToggleBtn" class="theme-btn" title="Rejimni o'zgartirish">
+            <i class="bi bi-moon-stars-fill"></i>
+        </button>
+        <button id="logout">Chiqish</button>
+    </header>
+    <div id="container">
+    </div>
+
+    <!-- Quick View Modal (Tezkor ko'rish) -->
+    <div class="g-pay-overlay" id="quickViewModal" style="display: none;">
+      <div class="g-pay-container" style="max-width: 600px; padding: 24px;">
+        <button class="g-pay-close-btn" id="closeQuickViewModal">&times;</button>
+        <div id="quickViewContent" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center;">
+            <!-- Content loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Mahsulot qo'shish modali -->
+    <div class="g-pay-overlay" id="addProductModal" style="display: none;">
+      <div class="g-pay-container" style="max-width: 480px;">
+        <button class="g-pay-close-btn" id="closeAddProductModal">&times;</button>
+        <div class="g-pay-header">
+          <h2 style="font-size: 20px; font-weight: 700; color: #1a1a1a;">➕ Yangi mahsulot qo'shish</h2>
+        </div>
+        <form class="g-pay-form" id="addProductForm">
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Mahsulot nomi</span>
+              <input type="text" id="pTitleInp" placeholder="Smartfon Xiaomi, Nike Krossovka..." required>
+            </label>
+          </div>
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Narxi (so'mda)</span>
+              <input type="number" id="pPriceInp" placeholder="2500000" required>
+            </label>
+          </div>
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Toifasi</span>
+              <select id="pCategorySelect" style="padding: 10px; border: none; outline: none; width: 100%;">
+                <option value="Elektronika">Elektronika</option>
+                <option value="Maishiy texnika">Maishiy texnika</option>
+                <option value="Kiyim-kechak">Kiyim-kechak</option>
+                <option value="Go'zallik va parvarish">Go'zallik va parvarish</option>
+                <option value="Uy-ro'zg'or buyumlari">Uy-ro'zg'or buyumlari</option>
+              </select>
+            </label>
+          </div>
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Rasm URL si</span>
+              <input type="url" id="pImgInp" placeholder="https://..." required>
+            </label>
+          </div>
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Mahsulot ta'rifi</span>
+              <input type="text" id="pDescInp" placeholder="Sifatli mahsulot ta'rifi..." required>
+            </label>
+          </div>
+          <div class="g-pay-actions">
+            <button type="button" class="btn-cancel" id="cancelAddProductBtn">Bekor qilish</button>
+            <button type="submit" class="btn-pay" style="background: #7000ff;">Qo'shish va saqlash</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Google Payments Style Checkout Modal -->
+    <div class="g-pay-overlay" id="paymentModal" style="display: none;">
+      <div class="g-pay-container">
+        <button class="g-pay-close-btn" id="closePaymentModal">&times;</button>
+        
+        <div class="g-pay-header">
+          <p class="g-pay-required-note">Barcha maydonlarni to'ldiring.</p>
+        </div>
+
+        <form class="g-pay-form" id="paymentForm">
+          <!-- Card Number -->
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Номер карты</span>
+              <div class="field-input-wrapper">
+                <i class="bi bi-credit-card-2-front card-icon"></i>
+                <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required id="cardNumberInp">
+                <i class="bi bi-question-circle help-icon" title="Введите 16 цифр на лицевой стороне карты"></i>
+              </div>
+            </label>
+          </div>
+
+          <!-- MM/YY & CVC -->
+          <div class="field-row-2">
+            <label class="outlined-field">
+              <span class="field-label">ММ/ГГ</span>
+              <input type="text" placeholder="ММ/ГГ" maxlength="5" required id="cardExpiryInp">
+            </label>
+            <label class="outlined-field">
+              <span class="field-label">CVC-код</span>
+              <div class="field-input-wrapper">
+                <input type="password" placeholder="CVC" maxlength="4" required id="cardCvcInp">
+                <i class="bi bi-question-circle help-icon" title="3-значный код безопасности на обратной стороне"></i>
+              </div>
+            </label>
+          </div>
+
+          <!-- Cardholder Name -->
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Имя владельца карты</span>
+              <input type="text" value="Odiljon Dilshodbekov" required id="cardHolderInp">
+            </label>
+          </div>
+
+          <!-- Address 1 -->
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Адрес, строка 1</span>
+              <input type="text" placeholder="Коча, уй" required>
+            </label>
+          </div>
+
+          <!-- Apartment / number (optional) -->
+          <div class="field-group with-subtext">
+            <label class="outlined-field">
+              <span class="field-label">Квартира, номер и т. д.</span>
+              <input type="text" placeholder="">
+            </label>
+            <span class="field-subtext">Необязательно</span>
+          </div>
+
+          <!-- Index (optional) -->
+          <div class="field-group with-subtext">
+            <label class="outlined-field">
+              <span class="field-label">Индекс</span>
+              <input type="text" placeholder="">
+            </label>
+            <span class="field-subtext">Необязательно</span>
+          </div>
+
+          <!-- City -->
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Город</span>
+              <input type="text" placeholder="Город / Шахар" required>
+            </label>
+          </div>
+
+          <!-- Oblast (Region dropdown) -->
+          <div class="field-group">
+            <label class="outlined-field">
+              <span class="field-label">Область</span>
+              <select required class="custom-select">
+                <option value="Tashkent City">Ташкент (город)</option>
+                <option value="Tashkent Region">Ташкентская область</option>
+                <option value="Samarkand">Самаркандская область</option>
+                <option value="Fergana">Ферганская область</option>
+                <option value="Andijan">Андижанская область</option>
+                <option value="Namangan">Наманганская область</option>
+                <option value="Bukhara">Бухарская область</option>
+                <option value="Khorezm">Хорезмская область</option>
+                <option value="Kashkadarya">Кашкадарьинская область</option>
+                <option value="Surkhandarya">Сурхандарьинская область</option>
+                <option value="Navoi">Навоийская область</option>
+                <option value="Jizzakh">Джизакская область</option>
+                <option value="Syrdarya">Сырдарьинская область</option>
+                <option value="Karakalpakstan">Республика Каракалпакстан</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- Country / Region -->
+          <div class="country-section">
+            <span class="country-label">Страна/регион</span>
+            <strong class="country-name">Узбекистан (UZ)</strong>
+          </div>
+
+          <!-- Google Payments footer disclaimer -->
+          <div class="g-pay-footer-terms">
+            Davom etish orqali siz Google to'lov hisobini yaratasiz hamda 
+            <a href="#" target="_blank">Google Payments foydalanish shartlarini</a> qabul qilasiz. 
+            Siz shuningdek, 
+            <a href="#" target="_blank">Maxfiylik eslatmasiga</a> ham rozilik bildirasiz. 
+            Ushbu hujjatda ma'lumotlaringiz qanday ishlanishi haqida axborot mavjud.
+          </div>
+
+          <!-- Submit buttons -->
+          <div class="g-pay-actions">
+            <button type="button" class="btn-cancel" id="cancelPayBtn">Bekor qilish</button>
+            <button type="submit" class="btn-pay">Saqlash va to'lash</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Telegram Live Support Chat Widget (@odiljon2213) -->
+    <div class="chat-widget-wrapper">
+        <button id="openChatBtn" class="chat-trigger-btn" title="Onlayn Yordam (Telegram)">
+            <i class="bi bi-telegram"></i>
+            <span class="chat-badge">1</span>
+        </button>
+
+        <div class="chat-box-card" id="chatBoxCard" style="display: none;">
+            <div class="chat-box-header">
+                <div class="chat-operator-info">
+                    <div class="operator-avatar">
+                        <i class="bi bi-person-fill-check"></i>
+                        <span class="online-indicator"></span>
+                    </div>
+                    <div>
+                        <h4>Odiljon Yordam Tizimi</h4>
+                        <span style="font-size: 11px; opacity: 0.9;">🟢 Onlayn • @odiljon2213</span>
+                    </div>
+                </div>
+                <button id="closeChatBtn" class="close-chat-btn">&times;</button>
+            </div>
+
+            <div class="chat-box-body" id="chatBoxBody">
+                <div class="chat-msg bot">
+                    Assalomu alaykum! 👋 Qanday savolingiz bor? Yozib yuboring, darhol Telegram orqali javob beraman! rahmat
+                </div>
+            </div>
+
+            <div class="chat-box-footer">
+                <input type="text" id="chatInput" placeholder="Savolingizni kiriting...">
+                <button id="sendChatBtn" class="send-chat-btn" title="Yuborish"><i class="bi bi-send-fill"></i></button>
+            </div>
+            
+            <a href="https://t.me/odiljon2213" target="_blank" class="direct-telegram-link">
+                <i class="bi bi-telegram"></i> Telegramda yozish (@odiljon2213)
+            </a>
+        </div>
+    </div>
+
+<script src="./js/uzum_data.js"></script>
+<script src="./js/index.js"></script>
 </body>
 </html>
