@@ -60,6 +60,14 @@ body {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
+.singleDelet, 
+.singleUpdate {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 .singleDelet,
 .singleUpdate {
     position: absolute;
