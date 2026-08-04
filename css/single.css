@@ -32,6 +32,10 @@ body {
   padding: 2rem 1rem;
 }
 
+.single-eyebrow {
+  display: none !important;
+}
+
 /* --- ORQAGA QAYTISH TUGMASI --- */
 .backPage {
   align-self: flex-start;
