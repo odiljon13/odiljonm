@@ -218,12 +218,21 @@ if($addProdForm){
         let price = Number(document.getElementById("apPrice").value);
         let category = document.getElementById("apCategory").value;
         let badge = document.getElementById("apBadge").value.trim();
+        let stock = Number(document.getElementById("apStock") ? document.getElementById("apStock").value : 15) || 15;
+        let colorsInput = document.getElementById("apColors") ? document.getElementById("apColors").value.trim() : "";
+        let sizesInput = document.getElementById("apSizes") ? document.getElementById("apSizes").value.trim() : "";
         let img1 = document.getElementById("apImg1").value.trim();
         let img2 = document.getElementById("apImg2") ? document.getElementById("apImg2").value.trim() : "";
         let desc = document.getElementById("apDesc").value.trim();
 
         let imgList = [img1];
         if(img2) imgList.push(img2);
+
+        let colorsList = colorsInput ? colorsInput.split(",").map(s=>s.trim()).filter(Boolean) : ["Qora", "Oq", "Ko'k"];
+        let sizesList = sizesInput ? sizesInput.split(",").map(s=>s.trim()).filter(Boolean) : ["Standart"];
+
+        let colorImagesMap = {};
+        colorsList.forEach((c, idx) => colorImagesMap[c] = imgList[idx % imgList.length]);
 
         let newProd = {
             id: Date.now(),
@@ -235,6 +244,10 @@ if($addProdForm){
             reviewsCount: 1,
             badge: badge || "Yangi",
             category: category,
+            stock: stock,
+            colors: colorsList,
+            sizes: sizesList,
+            colorImages: colorImagesMap,
             thumbnail: img1,
             images: imgList,
             description: desc
@@ -270,6 +283,9 @@ function openEditModal(prodId){
     document.getElementById("epPrice").value = prod.price || "";
     document.getElementById("epCategory").value = prod.category || "Elektronika";
     document.getElementById("epBadge").value = prod.badge || "";
+    if(document.getElementById("epStock")) document.getElementById("epStock").value = typeof prod.stock === 'number' ? prod.stock : 15;
+    if(document.getElementById("epColors")) document.getElementById("epColors").value = prod.colors ? prod.colors.join(", ") : "";
+    if(document.getElementById("epSizes")) document.getElementById("epSizes").value = prod.sizes ? prod.sizes.join(", ") : "";
     document.getElementById("epImg1").value = (prod.images && prod.images[0]) ? prod.images[0] : (prod.thumbnail || "");
     document.getElementById("epDesc").value = prod.description || "";
 
@@ -293,14 +309,29 @@ if($editProdForm){
         let price = Number(document.getElementById("epPrice").value);
         let category = document.getElementById("epCategory").value;
         let badge = document.getElementById("epBadge").value.trim();
+        let stock = Number(document.getElementById("epStock") ? document.getElementById("epStock").value : 15) || 15;
+        let colorsInput = document.getElementById("epColors") ? document.getElementById("epColors").value.trim() : "";
+        let sizesInput = document.getElementById("epSizes") ? document.getElementById("epSizes").value.trim() : "";
         let img1 = document.getElementById("epImg1").value.trim();
         let desc = document.getElementById("epDesc").value.trim();
+
+        let colorsList = colorsInput ? colorsInput.split(",").map(s=>s.trim()).filter(Boolean) : (loadedProductsList[index].colors || ["Qora", "Oq"]);
+        let sizesList = sizesInput ? sizesInput.split(",").map(s=>s.trim()).filter(Boolean) : (loadedProductsList[index].sizes || ["Standart"]);
+
+        let colorImagesMap = loadedProductsList[index].colorImages || {};
+        colorsList.forEach((c, idx) => {
+            if (!colorImagesMap[c]) colorImagesMap[c] = img1;
+        });
 
         loadedProductsList[index].title = title;
         loadedProductsList[index].price = price;
         loadedProductsList[index].monthlyPrice = Math.round(price / 12);
         loadedProductsList[index].category = category;
         loadedProductsList[index].badge = badge;
+        loadedProductsList[index].stock = stock;
+        loadedProductsList[index].colors = colorsList;
+        loadedProductsList[index].sizes = sizesList;
+        loadedProductsList[index].colorImages = colorImagesMap;
         loadedProductsList[index].thumbnail = img1;
         if(!loadedProductsList[index].images) loadedProductsList[index].images = [img1];
         else loadedProductsList[index].images[0] = img1;

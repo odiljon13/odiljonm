@@ -774,7 +774,7 @@ function getStoredUzumProducts() {
     } catch(e) {}
   }
 
-  // Stock, sizes, and colors enrichment
+  // Stock, category-tailored sizes, colors and image mapping enrichment
   let updated = prods.map((p, idx) => {
     let initP = initialUzumProducts.find(ip => ip.id === p.id);
     if (initP) {
@@ -782,16 +782,48 @@ function getStoredUzumProducts() {
       p.images = initP.images;
     }
     if (typeof p.stock !== 'number') p.stock = 12 + (p.id % 7);
-    if (!p.sizes) {
-      if (p.category === "Kiyim-kechak") p.sizes = ["S", "M", "L", "XL", "XXL"];
-      else if (p.category === "Elektronika") p.sizes = ["128GB", "256GB", "512GB"];
-      else p.sizes = ["Standart"];
+
+    let imgs = p.images && p.images.length > 0 ? p.images : [p.thumbnail || "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80"];
+
+    if (p.category === "Kiyim-kechak") {
+      if (p.title.toLowerCase().includes("krossovka") || p.title.toLowerCase().includes("poyabzal") || p.title.toLowerCase().includes("oyaqg'obi")) {
+        p.colors = ["Oq / Qora", "To'liq Qora", "Ko'k / Oq"];
+        p.sizes = ["39", "40", "41", "42", "43", "44"];
+      } else {
+        p.colors = ["Qora (Black)", "Oq (White)", "To'q Ko'k (Navy)", "Bej (Beige)"];
+        p.sizes = ["S", "M", "L", "XL", "XXL"];
+      }
+    } else if (p.category === "Elektronika") {
+      if (p.title.toLowerCase().includes("smartfon") || p.title.toLowerCase().includes("phone") || p.title.toLowerCase().includes("planshet")) {
+        p.colors = ["Midnight Black (Qora)", "Ocean Blue (Ko'k)", "Mint Green (Yashil)"];
+        p.sizes = ["128GB", "256GB (+300 000 so'm)", "512GB (+700 000 so'm)"];
+      } else if (p.title.toLowerCase().includes("watch") || p.title.toLowerCase().includes("soat")) {
+        p.colors = ["Starlight (Kumush)", "Midnight (Qora)", "Product RED (Qizil)"];
+        p.sizes = ["41mm", "45mm (+200 000 so'm)"];
+      } else if (p.title.toLowerCase().includes("quloqchin") || p.title.toLowerCase().includes("airpods")) {
+        p.colors = ["Oq (White)", "Space Grey (Qora)", "Midnight Blue (Ko'k)"];
+        p.sizes = ["Standart Case", "Wireless MagSafe (+150 000 so'm)"];
+      } else {
+        p.colors = ["Space Grey (Qora)", "Silver (Kumush)", "Titanium (Kulrang)"];
+        p.sizes = ["256GB SSD", "512GB SSD (+500 000 so'm)", "1TB SSD (+1 200 000 so'm)"];
+      }
+    } else if (p.category === "Maishiy texnika") {
+      p.colors = ["Kumushrang (Silver)", "Qora Matt (Black)", "Oq (White)"];
+      p.sizes = ["Standart rejim", "Turbo / Max rejim (+100 000 so'm)"];
+    } else if (p.category === "Go'zallik va parvarish") {
+      p.colors = ["Original Formula", "Soft Rose", "Gold Edition"];
+      p.sizes = ["50 ml", "100 ml (+120 000 so'm)"];
+    } else {
+      p.colors = ["Klassik Oltin Hoshiyali", "Zamonaviy Qora", "Kumush De Kor"];
+      p.sizes = ["Standart To'plam", "Premium Kengaytirilgan (+180 000 so'm)"];
     }
-    if (!p.colors) {
-      if (p.category === "Kiyim-kechak") p.colors = ["Qora", "Oq", "Ko'k", "Bej"];
-      else if (p.category === "Elektronika") p.colors = ["Midnight Black", "Space Grey", "Silver", "Titanium"];
-      else p.colors = ["Original", "Qora", "Kumush"];
-    }
+
+    // Color to Image Mapping object
+    p.colorImages = {};
+    p.colors.forEach((col, cIdx) => {
+      p.colorImages[col] = imgs[cIdx % imgs.length];
+    });
+
     return p;
   });
 

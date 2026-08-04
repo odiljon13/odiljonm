@@ -85,16 +85,39 @@ function getsingle(item){
 window.selectVariant = function(btn, type) {
     let parent = btn.parentElement;
     if (!parent) return;
+
+    // Reset styles on all pills in this group
     parent.querySelectorAll(".variant-pill").forEach(b => {
         b.style.border = "1.5px solid #cbd5e1";
         b.style.background = "#ffffff";
         b.style.color = "#1e293b";
         b.classList.remove("active");
     });
+
+    // Highlight selected pill
     btn.style.border = "1.5px solid #7000ff";
     btn.style.background = "#7000ff";
     btn.style.color = "#ffffff";
     btn.classList.add("active");
+
+    let val = btn.textContent.trim();
+
+    // Dinamik Rasm O'zgarishi: Rang tanlanganda mahsulot rasmi o'zgaradi!
+    if (type === 'color' && currentProduct) {
+        let targetImg = (currentProduct.colorImages && currentProduct.colorImages[val])
+            ? currentProduct.colorImages[val]
+            : (currentProduct.images ? currentProduct.images[Array.from(parent.children).indexOf(btn) % currentProduct.images.length] : currentProduct.thumbnail);
+
+        let $mainImg = document.querySelector(".single_img");
+        if ($mainImg && targetImg) {
+            $mainImg.style.opacity = "0.2";
+            $mainImg.style.transition = "opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1)";
+            setTimeout(() => {
+                $mainImg.src = targetImg;
+                $mainImg.style.opacity = "1";
+            }, 180);
+        }
+    }
 };
 
 // ================= COMMENTS & REVIEWS LOGIC =================
