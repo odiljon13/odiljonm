@@ -3,8 +3,8 @@
 
 const https = require('https');
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "7123456789:AAEFakeTokenForUzumMarketBot_2026";
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "123456789";
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "8395285474:AAH_uzum_market_bot_token";
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "8395285474";
 
 function sendTelegramMessage(text) {
   return new Promise((resolve, reject) => {
