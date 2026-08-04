@@ -71,47 +71,7 @@
             </div>
         </div>
 
-        <!-- Backend Server Monitoring va Live API Testing Console -->
-        <div class="backend-console-card">
-            <div class="backend-console-header">
-                <h3 class="backend-console-title">
-                    ⚡ Backend Server Diagnostikasi & REST API Test Konsoli
-                </h3>
-                <span class="backend-status-badge">
-                    <span class="pulse-dot"></span> Backend Status: Faol (Node.js REST API Server v2.0)
-                </span>
-            </div>
 
-            <p class="backend-console-desc">
-                Server orqasida ishlayotgan Node.js REST API va Serverless End-pointlarni jonli ravishda sinab ko'rish uchun quyidagi tugmalarni bosing:
-            </p>
-
-            <div class="backend-buttons-group">
-                <button class="backend-btn btn-products" onclick="testBackendApi('products')">
-                    🧪 GET /api/products (Mahsulotlar API)
-                </button>
-                <button class="backend-btn btn-auth" onclick="testBackendApi('auth')">
-                    🧪 POST /api/auth (JWT Token Auth)
-                </button>
-                <button class="backend-btn btn-telegram" onclick="testBackendApi('telegram')">
-                    🧪 POST /api/telegram (Telegram Bot API)
-                </button>
-                <button class="backend-btn btn-payment" onclick="testBackendApi('payment')">
-                    🧪 GET /api/payment (Click / Payme Link)
-                </button>
-            </div>
-
-            <!-- API Console JSON Output Display -->
-            <div class="backend-terminal">
-                <div class="terminal-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                    <span class="terminal-title">node-rest-api@server:~ /api/console</span>
-                </div>
-                <pre id="apiConsoleOutput" class="terminal-body">⚡ Backend Server API Konsoli tayyor! Yuqoridagi API larni sinash tugmasini bosing...</pre>
-            </div>
-        </div>
 
         <!-- Buyurtmalarni Boshqarish (Order Status Management) Bo'limi -->
         <div style="background: #161b22; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
