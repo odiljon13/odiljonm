@@ -200,22 +200,37 @@ document.addEventListener("input", (e)=>{
 
 // Handle payment form submission
 if($paymentForm){
-    $paymentForm.addEventListener("submit", (e)=>{
+    $paymentForm.addEventListener("submit", async (e)=>{
         e.preventDefault();
         
         let orders = JSON.parse(localStorage.getItem("order_history")) || [];
         let cart = getCart();
         
         if(cart.length > 0){
+            let orderId = Math.floor(100000 + Math.random() * 900000);
+            let totalSum = cart.reduce((sum, i) => sum + i.price * (i.quantity || 1), 0);
             let newOrder = {
-                id: Math.floor(100000 + Math.random() * 900000),
+                id: orderId,
                 date: new Date().toLocaleDateString("uz-UZ"),
                 items: cart,
                 totalItems: cart.reduce((sum, i) => sum + (i.quantity || 1), 0),
-                totalCost: cart.reduce((sum, i) => sum + i.price * (i.quantity || 1), 0).toFixed(2)
+                totalCost: totalSum.toLocaleString("uz-UZ") + " so'm",
+                status: "📌 Qabul qilindi"
             };
             orders.unshift(newOrder);
             localStorage.setItem("order_history", JSON.stringify(orders));
+
+            // Notify Telegram Bot Backend Engine
+            if (window.ApiService) {
+              window.ApiService.notifyTelegram({
+                orderId: orderId,
+                status: "📌 Qabul qilindi",
+                items: cart,
+                totalCost: totalSum.toLocaleString("uz-UZ"),
+                customerName: "Faroxiddin",
+                phone: "+998 90 123 45 67"
+              });
+            }
         }
 
         saveCart([]);
