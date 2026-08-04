@@ -758,6 +758,24 @@ var initialUzumProducts = [
       "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=500&auto=format&fit=crop&q=80"
     ]
+  },
+  {
+    id: 143,
+    title: "Simsiz quloqchinlar Xiaomi Redmi Buds 5 Pro, ANC Shovqin so'ndirish, Qora",
+    price: 489000,
+    oldPrice: 590000,
+    monthlyPrice: 40750,
+    discountPercentage: 17,
+    rating: 4.9,
+    reviewsCount: 310,
+    badge: "Top sotuv",
+    category: "Elektronika",
+    description: "Xiaomi Redmi Buds 5 Pro — 52dB faol shovqin so'ndirish (ANC), Hi-Res Audio sertifikati va MagSafe zaryadlash qutisi bilan 38 soatgacha ishlash vaqti.",
+    thumbnail: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=80",
+    images: [
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?w=500&auto=format&fit=crop&q=80"
+    ]
   }
 ];
 
