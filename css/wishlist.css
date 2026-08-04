@@ -78,3 +78,16 @@
   background: #5a20b8;
   transform: translateY(-2px);
 }
+
+/* Mobile Responsiveness for Wishlist Page */
+@media (max-width: 768px) {
+  .wishlist-container {
+    padding: 16px 12px 60px;
+  }
+
+  .wishlist-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+  }
+}
+

@@ -596,3 +596,11 @@ body > h1::after {
     margin: 0 auto;
     padding: 1rem 0 3rem;
 }
+
+@media (max-width: 768px) {
+  .admin-prod-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 10px !important;
+  }
+}

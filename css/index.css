@@ -1199,4 +1199,204 @@ body.dark-theme .uzum-main-price {
 
 .direct-telegram-link:hover {
   background: #006699;
-}
+}
+
+/* =========================================================
+   MOBILE & TABLET RESPONSIVE STYLES (Uzum Market Mobile UI)
+   ========================================================= */
+
+@media (max-width: 992px) {
+  .header {
+    padding: 12px 20px;
+    gap: 12px;
+  }
+  
+  #container {
+    padding: 20px 20px 50px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile Header */
+  .header {
+    padding: 10px 14px;
+    gap: 10px;
+  }
+
+  .header h1 {
+    font-size: 20px;
+    margin-right: 0;
+  }
+
+  .searchInp {
+    order: 10;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding: 10px 14px;
+    font-size: 13.5px;
+  }
+
+  .category-select,
+  #tanlov {
+    font-size: 12.5px;
+    padding: 8px 10px;
+    border-radius: 10px;
+  }
+
+  .header-cart-btn,
+  .header-add-btn {
+    padding: 8px 10px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+
+  #logout {
+    padding: 8px 14px;
+    font-size: 12px;
+    border-radius: 10px;
+  }
+
+  /* 2-Column Mobile Product Grid (Uzum Market App style) */
+  #container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    padding: 12px 10px 60px !important;
+  }
+
+  .product-card {
+    border-radius: 12px;
+  }
+
+  .product-card .body {
+    padding: 8px 10px 10px;
+  }
+
+  .product-card .body h1 {
+    font-size: 12.5px;
+    line-height: 1.35;
+    height: 34px;
+    margin-bottom: 6px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .discount-badge {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+
+  .uzum-tag-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+  }
+
+  .wishlist-btn,
+  .quickview-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+
+  .quickview-btn {
+    top: 40px;
+  }
+
+  .uzum-installment-badge {
+    padding: 3px 6px;
+    font-size: 10.5px;
+    margin-bottom: 6px;
+  }
+
+  .uzum-main-price {
+    font-size: 14px;
+  }
+
+  .uzum-old-price {
+    font-size: 11px;
+  }
+
+  .card-buttons-group {
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .btn-cart,
+  .btn-buy {
+    padding: 7px 4px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .btn-cart i {
+    font-size: 12px;
+  }
+
+  /* Mobile Modals */
+  .g-pay-container {
+    width: 94% !important;
+    max-width: 94% !important;
+    padding: 16px !important;
+    border-radius: 16px !important;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .field-row-2 {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  /* Mobile Live Chat Widget */
+  .chat-widget-wrapper {
+    bottom: 16px;
+    right: 14px;
+  }
+
+  .chat-trigger-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+  }
+
+  .chat-box-card {
+    width: calc(100vw - 28px) !important;
+    right: -4px !important;
+    bottom: 64px !important;
+    border-radius: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  #container {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+    padding: 10px 8px 60px !important;
+  }
+
+  .product-card .body h1 {
+    font-size: 12px;
+    height: 32px;
+  }
+
+  .uzum-main-price {
+    font-size: 13.5px;
+  }
+
+  .card-buttons-group {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .btn-cart,
+  .btn-buy {
+    width: 100%;
+    justify-content: center;
+    padding: 8px;
+  }
+}
+

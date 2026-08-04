@@ -336,3 +336,43 @@ body {
   background: #5a20b8;
   transform: translateY(-2px);
 }
+
+/* Mobile Responsiveness for Cart Page */
+@media (max-width: 768px) {
+  .cart-container {
+    padding: 16px 12px 60px;
+  }
+
+  .cart-item-card {
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .cart-item-img-wrapper {
+    width: 70px;
+    height: 70px;
+  }
+
+  .cart-item-title {
+    font-size: 14px;
+  }
+
+  .cart-item-price {
+    font-size: 15px;
+  }
+
+  .cart-item-actions {
+    width: 100%;
+    justify-content: space-between;
+    padding-top: 8px;
+    border-top: 1px dashed #eee;
+  }
+
+  .cart-summary {
+    position: static;
+    padding: 16px;
+    margin-top: 16px;
+  }
+}
+
