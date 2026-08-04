@@ -14,7 +14,8 @@ body {
 .header {
   display: flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 14px;
   flex-wrap: wrap;
   padding: 14px 40px;
   background: #ffffff;
@@ -1228,6 +1229,8 @@ body.dark-theme .uzum-main-price {
   .header {
     padding: 10px 14px;
     gap: 10px;
+    justify-content: center;
+    align-items: center;
   }
 
   .header h1 {
