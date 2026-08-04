@@ -492,22 +492,20 @@ if ($chatInput) {
     });
 }
 
-// Mobile Header Auto-Hide on Scroll Down (Pastga tortganda tepadagi menu yo'qolishi)
-let lastScrollTop = 0;
+// Mobile Header Auto-Hide Logic: Faqat sahifa eng tepasida turganda menyu chiqadi
 let $headerElem = document.querySelector(".header");
 
 if ($headerElem) {
     window.addEventListener("scroll", () => {
         if (window.innerWidth <= 768) {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop && scrollTop > 50) {
-                // Scroll Down -> Hide Header
+            if (scrollTop > 15) {
+                // Sahifadan pastga tushilganda -> Menyu yashirinadi
                 $headerElem.style.transform = "translateY(-100%)";
             } else {
-                // Scroll Up -> Show Header
+                // Faqat sahifaning eng tepasiga ko'tarilganda -> Menyu qaytib chiqadi
                 $headerElem.style.transform = "translateY(0)";
             }
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
         } else {
             $headerElem.style.transform = "translateY(0)";
         }
