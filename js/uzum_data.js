@@ -357,9 +357,9 @@ var initialUzumProducts = [
     badge: "Tavsiya etiladi",
     category: "Elektronika",
     description: "Anker 737 — Noutbuk va telefonlarni bir vaqtda ultra-tez zaryadlovchi 140W quvvatli va aqlli raqamli displeyli tashqi akkumulyator.",
-    thumbnail: "https://images.unsplash.com/photo-1609592424074-98442e97a224?w=500&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500&auto=format&fit=crop&q=80",
     images: [
-      "https://images.unsplash.com/photo-1609592424074-98442e97a224?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=500&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1620783770629-122b7f187703?w=500&auto=format&fit=crop&q=80"
     ]
   },
