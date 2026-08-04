@@ -73,6 +73,10 @@ body {
   border-color: #6c2bd9;
 }
 
+.header-add-btn {
+  display: none !important;
+}
+
 #logout {
   padding: 12px 24px;
   border: none;

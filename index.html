@@ -27,9 +27,6 @@
             <option value="new">Qimmat</option>
             <option value="old">Arzon</option>
         </select>
-        <button id="openAddProductBtn" class="header-add-btn">
-            <i class="bi bi-plus-circle-fill"></i> Qo'shish
-        </button>
         <a href="./html/wishlist.html" class="header-cart-btn" style="background: #fdf2f8; color: #ec4899;">
             <i class="bi bi-heart-fill"></i> Saralanganlar 
             <span id="wishlist-count-badge" style="background: #ec4899; color: white; padding: 2px 8px; border-radius: 12px; font-size: 13px;">0</span>
@@ -59,57 +56,7 @@
       </div>
     </div>
 
-    <!-- Mahsulot qo'shish modali -->
-    <div class="g-pay-overlay" id="addProductModal" style="display: none;">
-      <div class="g-pay-container" style="max-width: 480px;">
-        <button class="g-pay-close-btn" id="closeAddProductModal">&times;</button>
-        <div class="g-pay-header">
-          <h2 style="font-size: 20px; font-weight: 700; color: #1a1a1a;">➕ Yangi mahsulot qo'shish</h2>
-        </div>
-        <form class="g-pay-form" id="addProductForm">
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Mahsulot nomi</span>
-              <input type="text" id="pTitleInp" placeholder="Smartfon Xiaomi, Nike Krossovka..." required>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Narxi (so'mda)</span>
-              <input type="number" id="pPriceInp" placeholder="2500000" required>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Toifasi</span>
-              <select id="pCategorySelect" style="padding: 10px; border: none; outline: none; width: 100%;">
-                <option value="Elektronika">Elektronika</option>
-                <option value="Maishiy texnika">Maishiy texnika</option>
-                <option value="Kiyim-kechak">Kiyim-kechak</option>
-                <option value="Go'zallik va parvarish">Go'zallik va parvarish</option>
-                <option value="Uy-ro'zg'or buyumlari">Uy-ro'zg'or buyumlari</option>
-              </select>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Rasm URL si</span>
-              <input type="url" id="pImgInp" placeholder="https://..." required>
-            </label>
-          </div>
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Mahsulot ta'rifi</span>
-              <input type="text" id="pDescInp" placeholder="Sifatli mahsulot ta'rifi..." required>
-            </label>
-          </div>
-          <div class="g-pay-actions">
-            <button type="button" class="btn-cancel" id="cancelAddProductBtn">Bekor qilish</button>
-            <button type="submit" class="btn-pay" style="background: #7000ff;">Qo'shish va saqlash</button>
-          </div>
-        </form>
-      </div>
-    </div>
+
 
     <!-- Google Payments Style Checkout Modal -->
     <div class="g-pay-overlay" id="paymentModal" style="display: none;">

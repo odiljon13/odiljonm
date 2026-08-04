@@ -32,7 +32,8 @@ body {
   padding: 2rem 1rem;
 }
 
-.single-eyebrow {
+.single-eyebrow,
+.product-variants-box {
   display: none !important;
 }
 
