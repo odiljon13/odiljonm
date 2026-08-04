@@ -491,3 +491,25 @@ if ($chatInput) {
         if (e.key === "Enter") sendUserChatMessage();
     });
 }
+
+// Mobile Header Auto-Hide on Scroll Down (Pastga tortganda tepadagi menu yo'qolishi)
+let lastScrollTop = 0;
+let $headerElem = document.querySelector(".header");
+
+if ($headerElem) {
+    window.addEventListener("scroll", () => {
+        if (window.innerWidth <= 768) {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 50) {
+                // Scroll Down -> Hide Header
+                $headerElem.style.transform = "translateY(-100%)";
+            } else {
+                // Scroll Up -> Show Header
+                $headerElem.style.transform = "translateY(0)";
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        } else {
+            $headerElem.style.transform = "translateY(0)";
+        }
+    }, { passive: true });
+}
