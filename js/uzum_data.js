@@ -68,9 +68,9 @@ var initialUzumProducts = [
     badge: "Super narx",
     category: "Maishiy texnika",
     description: "Tefal Glass Element — yoritgichli shisha korpusli va zanglamaydigan po'lat elementli elektr choynak. Avtomatik o'chish va 1.7 litr sig'im.",
-    thumbnail: "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?w=500&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&auto=format&fit=crop&q=80",
     images: [
-      "https://images.unsplash.com/photo-1594212699903-ec8a3eca50f6?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=500&auto=format&fit=crop&q=80"
     ]
   },
@@ -176,10 +176,10 @@ var initialUzumProducts = [
     badge: "Super narx",
     category: "Go'zallik va parvarish",
     description: "Nivea Soft — Jojoba yog'i va E vitamini bilan boyitilgan intensiv namlantiruvchi universal krem. Yuz, qo'l va badan uchun mos tushadi.",
-    thumbnail: "https://images.unsplash.com/photo-1608248597260-9f23696f4244?w=500&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80",
     images: [
-      "https://images.unsplash.com/photo-1608248597260-9f23696f4244?w=500&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&auto=format&fit=crop&q=80"
     ]
   },
   {
@@ -483,10 +483,10 @@ var initialUzumProducts = [
     badge: "Top sotuv",
     category: "Maishiy texnika",
     description: "Xiaomi Robot S10 — Lazerli xaritaga oluvchi LDS navigatsiya, 4000Pa tortish kuchi va ho'llab tozalash funksiyasi.",
-    thumbnail: "https://images.unsplash.com/photo-1563161407-167822961d1e?w=500&auto=format&fit=crop&q=80",
+    thumbnail: "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=500&auto=format&fit=crop&q=80",
     images: [
-      "https://images.unsplash.com/photo-1563161407-167822961d1e?w=500&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1618103138281-99609e663643?w=500&auto=format&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=500&auto=format&fit=crop&q=80"
     ]
   },
   {
@@ -720,7 +720,7 @@ var initialUzumProducts = [
     thumbnail: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=500&auto=format&fit=crop&q=80",
     images: [
       "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=500&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1590794056226-77ef3a6c4743?w=500&auto=format&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=500&auto=format&fit=crop&q=80"
     ]
   },
   {
@@ -773,7 +773,16 @@ function getStoredUzumProducts() {
       localStorage.setItem("uzum_products", JSON.stringify(initialUzumProducts));
       return initialUzumProducts;
     }
-    return parsed;
+    let updated = parsed.map(p => {
+      let initP = initialUzumProducts.find(ip => ip.id === p.id);
+      if (initP) {
+        p.thumbnail = initP.thumbnail;
+        p.images = initP.images;
+      }
+      return p;
+    });
+    localStorage.setItem("uzum_products", JSON.stringify(updated));
+    return updated;
   } catch(e) {
     localStorage.setItem("uzum_products", JSON.stringify(initialUzumProducts));
     return initialUzumProducts;
