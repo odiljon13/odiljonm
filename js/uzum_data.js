@@ -52,8 +52,8 @@ var initialUzumProducts = [
     thumbnail: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80",
     images: [
       "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1607522370275-f14206abe5d3?w=500&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=500&auto=format&fit=crop&q=80"
+      "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&auto=format&fit=crop&q=80"
     ]
   },
   {
@@ -783,12 +783,16 @@ function getStoredUzumProducts() {
     }
     if (typeof p.stock !== 'number') p.stock = 12 + (p.id % 7);
 
-    let imgs = p.images && p.images.length > 0 ? p.images : [p.thumbnail || "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80"];
-
     if (p.category === "Kiyim-kechak") {
-      if (p.title.toLowerCase().includes("krossovka") || p.title.toLowerCase().includes("poyabzal") || p.title.toLowerCase().includes("oyaqg'obi")) {
+      if (p.title.toLowerCase().includes("krossovka") || p.title.toLowerCase().includes("poyabzal") || p.title.toLowerCase().includes("oyaqg'obi") || p.title.toLowerCase().includes("nike")) {
         p.colors = ["Oq / Qora", "To'liq Qora", "Ko'k / Oq"];
         p.sizes = ["39", "40", "41", "42", "43", "44"];
+        p.images = [
+          "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&auto=format&fit=crop&q=80",
+          "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&auto=format&fit=crop&q=80"
+        ];
+        p.thumbnail = p.images[0];
       } else {
         p.colors = ["Qora (Black)", "Oq (White)", "To'q Ko'k (Navy)", "Bej (Beige)"];
         p.sizes = ["S", "M", "L", "XL", "XXL"];
@@ -820,6 +824,7 @@ function getStoredUzumProducts() {
 
     // Color to Image Mapping object
     p.colorImages = {};
+    let imgs = p.images && p.images.length > 0 ? p.images : [p.thumbnail || "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80"];
     p.colors.forEach((col, cIdx) => {
       p.colorImages[col] = imgs[cIdx % imgs.length];
     });
