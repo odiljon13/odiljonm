@@ -251,6 +251,25 @@ function changeQvImg(url){
     }
 }
 
+// Flash Sale Live Countdown Timer Interval
+function startFlashSaleTimer() {
+    let timerEl = document.getElementById("flashSaleTimer");
+    if (!timerEl) return;
+
+    let secondsLeft = 7 * 3600 + 42 * 60 + 15;
+    setInterval(() => {
+        if (secondsLeft <= 0) secondsLeft = 24 * 3600;
+        secondsLeft--;
+
+        let h = Math.floor(secondsLeft / 3600).toString().padStart(2, '0');
+        let m = Math.floor((secondsLeft % 3600) / 60).toString().padStart(2, '0');
+        let s = (secondsLeft % 60).toString().padStart(2, '0');
+
+        timerEl.textContent = `${h}:${m}:${s}`;
+    }, 1000);
+}
+startFlashSaleTimer();
+
 function closeQuickModal(){
     if($quickViewModal) $quickViewModal.style.display = "none";
 }

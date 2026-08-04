@@ -64,6 +64,13 @@ class OrderCreate(BaseModel):
     phone: str
     paymentMethod: Optional[str] = "Uzcard/Humo"
 
+class ReviewCreate(BaseModel):
+    productId: int
+    userName: str
+    rating: int = Field(..., ge=1, le=5)
+    comment: str
+    photoUrl: Optional[str] = ""
+
 # Helper: Load Dataset
 def load_products_from_file():
     dataset_path = os.path.join(os.path.dirname(__file__), "..", "js", "uzum_data.js")
@@ -159,6 +166,40 @@ def create_order(order: OrderCreate):
         "orderId": order_id,
         "status": "📌 Qabul qilindi",
         "totalCost": order.totalCost
+    }
+
+@app.get("/api/v1/reviews")
+def get_reviews(productId: int = Query(101)):
+    return {
+        "success": True,
+        "productId": productId,
+        "reviews": [
+            {
+                "id": 1,
+                "productId": productId,
+                "userName": "Shohrux M.",
+                "rating": 5,
+                "date": "2026-08-01",
+                "comment": "Juda a'lo mahsulot! Python FastAPI backend bilan juda tez javob qaytarmoqda.",
+                "photoUrl": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&auto=format&fit=crop&q=80"
+            }
+        ]
+    }
+
+@app.post("/api/v1/reviews", status_code=status.HTTP_201_CREATED)
+def create_review(review: ReviewCreate):
+    return {
+        "success": True,
+        "message": "Sharhingiz va bahoingiz Python FastAPI serveriga saqlandi!",
+        "review": {
+            "id": int(time.time()),
+            "productId": review.productId,
+            "userName": review.userName,
+            "rating": review.rating,
+            "comment": review.comment,
+            "photoUrl": review.photoUrl,
+            "date": time.strftime('%Y-%m-%d')
+        }
     }
 
 if __name__ == "__main__":

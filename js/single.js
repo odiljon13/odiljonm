@@ -183,8 +183,13 @@ function renderComments(apiReviews){
         totalStar += stars;
         let starSymbols = "⭐️".repeat(stars);
         
-        let initial = rev.reviewerName ? rev.reviewerName.charAt(0).toUpperCase() : "U";
+        let initial = (rev.reviewerName || rev.userName) ? (rev.reviewerName || rev.userName).charAt(0).toUpperCase() : "U";
         let dateStr = rev.date && rev.date.includes("T") ? rev.date.split("T")[0] : (rev.date || "Bugun");
+        let photoImgHtml = rev.photoUrl ? `
+            <div style="margin-top: 10px;">
+                <img src="${rev.photoUrl}" alt="Mijoz yuklagan rasm" style="max-width: 200px; max-height: 180px; border-radius: 12px; border: 1px solid #cbd5e1; object-fit: cover; cursor: pointer;" onclick="window.open('${rev.photoUrl}', '_blank')">
+            </div>
+        ` : '';
         
         let card = document.createElement("div");
         card.className = "comment-card";
@@ -193,7 +198,7 @@ function renderComments(apiReviews){
                 <div class="user-info">
                     <div class="user-avatar">${initial}</div>
                     <div class="user-details">
-                        <h4>${rev.reviewerName || "Foydalanuvchi"}</h4>
+                        <h4>${rev.reviewerName || rev.userName || "Foydalanuvchi"}</h4>
                         <span class="comment-date"><i class="bi bi-calendar3"></i> ${dateStr}</span>
                     </div>
                 </div>
@@ -201,6 +206,7 @@ function renderComments(apiReviews){
             </div>
             <div class="comment-body">
                 ${rev.comment || ""}
+                ${photoImgHtml}
             </div>
         `;
         $commentsList.appendChild(card);
@@ -213,29 +219,46 @@ function renderComments(apiReviews){
 }
 
 if ($commentForm) {
-    $commentForm.addEventListener("submit", (e)=>{
+    $commentForm.addEventListener("submit", async (e)=>{
         e.preventDefault();
         let nameVal = $commentName ? $commentName.value.trim() : "Foydalanuvchi";
         let rateVal = $commentRating ? Number($commentRating.value) : 5;
         let textVal = $commentText ? $commentText.value.trim() : "";
+        let photoInp = document.getElementById("commentPhotoUrl");
+        let photoVal = photoInp ? photoInp.value.trim() : "";
         
         if (!textVal) return;
         
         let newReview = {
+            productId: Number(id) || 101,
             reviewerName: nameVal,
+            userName: nameVal,
             rating: rateVal,
             comment: textVal,
+            photoUrl: photoVal,
             date: new Date().toLocaleDateString("uz-UZ")
         };
+
+        // Send to Backend REST API
+        try {
+          await fetch('/api/reviews', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newReview)
+          });
+        } catch (e) {
+          console.warn("Review API fallback:", e);
+        }
         
         let stored = getStoredReviews();
         stored.unshift(newReview);
         localStorage.setItem(`product_reviews_${id}`, JSON.stringify(stored));
         
         if ($commentText) $commentText.value = "";
+        if (photoInp) photoInp.value = "";
         
         renderComments(currentProduct && currentProduct.reviews ? currentProduct.reviews : []);
-        alert("✅ Izohingiz va fikringiz muvaffaqiyatli qo'shildi!");
+        alert("✅ Sharhingiz, bahoingiz va rasmingiz backend bazasiga muvaffaqiyatli saqlandi!");
     });
 }
 

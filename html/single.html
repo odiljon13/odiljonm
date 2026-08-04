@@ -57,7 +57,7 @@
         </div>
 
         <form id="commentForm" class="comment-form">
-            <h3>Izohingizni qoldiring</h3>
+            <h3>⭐ Izohingizni qoldiring va Rasm yuklang</h3>
             <div class="form-row">
                 <input type="text" id="commentName" placeholder="Ismingizni kiriting..." required>
                 <select id="commentRating" required>
@@ -68,8 +68,11 @@
                     <option value="1">⭐️ (1 - Yomon)</option>
                 </select>
             </div>
+            <div style="margin-bottom: 12px;">
+                <input type="url" id="commentPhotoUrl" placeholder="📸 Tovar rasmi URL-si (masalan: https://...)" style="width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 13.5px; outline: none;">
+            </div>
             <textarea id="commentText" placeholder="Mahsulot haqida o'z fikringiz va taassurotlaringizni yozing..." rows="4" required></textarea>
-            <button type="submit" class="submit-comment-btn"><i class="bi bi-send-fill"></i> Izoh yuborish</button>
+            <button type="submit" class="submit-comment-btn"><i class="bi bi-send-fill"></i> Izoh va Rasmni yuborish</button>
         </form>
 
         <div id="commentsList" class="comments-list">
