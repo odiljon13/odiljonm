@@ -19,10 +19,17 @@
                 </div>
             </div>
 
-            <div class="admin-header-actions">
-                <a href="../html/index.html" class="btn-shop-view" style="padding: 10px 18px; background: rgba(255,255,255,0.1); color: white; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 14px;">
+            <div class="admin-header-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="../html/index.html" class="btn-shop-view" style="padding: 10px 16px; background: rgba(255,255,255,0.1); color: white; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 13.5px;">
                     🛍 Do'konni ko'rish
                 </a>
+                <button id="exportCsvBtn" style="padding: 10px 14px; background: #10b981; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer;">
+                    📥 Excel (CSV) Eksport
+                </button>
+                <label id="importCsvLabel" style="padding: 10px 14px; background: #3b82f6; color: white; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
+                    📤 CSV Import
+                    <input type="file" id="importCsvInput" accept=".csv" style="display: none;">
+                </label>
                 <button id="openAddProdBtn" class="btn-add-user" style="background: linear-gradient(135deg, #7000ff, #8b2cf5);">
                     ➕ Yangi mahsulot qo'shish
                 </button>
@@ -32,7 +39,7 @@
             </div>
         </header>
 
-        <!-- Admin Statistika Kartalari -->
+        <!-- Admin Sotuvlar Analitikasi va Dashbord -->
         <div class="admin-dashboard">
             <div class="stat-card">
                 <div class="stat-icon" style="background: rgba(112, 0, 255, 0.2); color: #a855f7;">🛍</div>
@@ -42,18 +49,49 @@
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">🗂</div>
+                <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2); color: #34d399;">💰</div>
                 <div class="stat-info">
-                    <span>Toifalar Soni</span>
-                    <strong id="statCategoriesCount">0 ta</strong>
+                    <span>Jami Sotuvlar Tushumi</span>
+                    <strong id="statTotalRevenue" style="color: #34d399;">0 so'm</strong>
                 </div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon" style="background: rgba(236, 72, 153, 0.2); color: #f472b6;">⚡</div>
+                <div class="stat-icon" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">📦</div>
                 <div class="stat-info">
-                    <span>Baza Holati</span>
-                    <strong style="color: #34d399;">Uzum Sync (Faol)</strong>
+                    <span>Buyurtmalar Soni</span>
+                    <strong id="statOrdersCount">0 ta</strong>
                 </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon" style="background: rgba(236, 72, 153, 0.2); color: #f472b6;">🏭</div>
+                <div class="stat-info">
+                    <span>Ombordagi Zaxira</span>
+                    <strong id="statTotalStock">0 ta tovar</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buyurtmalarni Boshqarish (Order Status Management) Bo'limi -->
+        <div style="background: #161b22; border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 20px; margin-bottom: 24px;">
+            <h3 style="color: white; font-size: 18px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                📋 Buyurtmalarni Boshqarish va Telegram Status Tracking
+            </h3>
+            <div id="adminOrdersTableWrapper" style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse; color: white; font-size: 13.5px;">
+                    <thead>
+                        <tr style="border-bottom: 1.5px solid rgba(255,255,255,0.15); text-align: left; color: #94a3b8;">
+                            <th style="padding: 10px;">ID</th>
+                            <th style="padding: 10px;">Sana</th>
+                            <th style="padding: 10px;">Mahsulotlar</th>
+                            <th style="padding: 10px;">Summa</th>
+                            <th style="padding: 10px;">Buyurtmachi</th>
+                            <th style="padding: 10px;">Holati (Status)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTbody">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
             </div>
         </div>
 

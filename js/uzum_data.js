@@ -763,30 +763,40 @@ var initialUzumProducts = [
 
 function getStoredUzumProducts() {
   let stored = localStorage.getItem("uzum_products");
-  if (!stored) {
-    localStorage.setItem("uzum_products", JSON.stringify(initialUzumProducts));
-    return initialUzumProducts;
-  }
-  try {
-    let parsed = JSON.parse(stored);
-    if (!Array.isArray(parsed) || parsed.length < initialUzumProducts.length) {
-      localStorage.setItem("uzum_products", JSON.stringify(initialUzumProducts));
-      return initialUzumProducts;
-    }
-    let updated = parsed.map(p => {
-      let initP = initialUzumProducts.find(ip => ip.id === p.id);
-      if (initP) {
-        p.thumbnail = initP.thumbnail;
-        p.images = initP.images;
+  let prods = initialUzumProducts;
+  
+  if (stored) {
+    try {
+      let parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length >= initialUzumProducts.length) {
+        prods = parsed;
       }
-      return p;
-    });
-    localStorage.setItem("uzum_products", JSON.stringify(updated));
-    return updated;
-  } catch(e) {
-    localStorage.setItem("uzum_products", JSON.stringify(initialUzumProducts));
-    return initialUzumProducts;
+    } catch(e) {}
   }
+
+  // Stock, sizes, and colors enrichment
+  let updated = prods.map((p, idx) => {
+    let initP = initialUzumProducts.find(ip => ip.id === p.id);
+    if (initP) {
+      p.thumbnail = initP.thumbnail;
+      p.images = initP.images;
+    }
+    if (typeof p.stock !== 'number') p.stock = 12 + (p.id % 7);
+    if (!p.sizes) {
+      if (p.category === "Kiyim-kechak") p.sizes = ["S", "M", "L", "XL", "XXL"];
+      else if (p.category === "Elektronika") p.sizes = ["128GB", "256GB", "512GB"];
+      else p.sizes = ["Standart"];
+    }
+    if (!p.colors) {
+      if (p.category === "Kiyim-kechak") p.colors = ["Qora", "Oq", "Ko'k", "Bej"];
+      else if (p.category === "Elektronika") p.colors = ["Midnight Black", "Space Grey", "Silver", "Titanium"];
+      else p.colors = ["Original", "Qora", "Kumush"];
+    }
+    return p;
+  });
+
+  localStorage.setItem("uzum_products", JSON.stringify(updated));
+  return updated;
 }
 
 function saveUzumProducts(products) {
@@ -797,3 +807,18 @@ function formatSum(amount) {
   if (!amount) return "0 so'm";
   return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
 }
+
+// Promokodlar ro'yxati va tekshirish (Promocode system)
+var validPromocodes = {
+  "ODILJON10": 10,
+  "UZUM20": 20,
+  "SUPER15": 15,
+  "VIP50": 50
+};
+
+function validatePromocode(code) {
+  if (!code) return 0;
+  let cleanCode = code.trim().toUpperCase();
+  return validPromocodes[cleanCode] || 0;
+}
+

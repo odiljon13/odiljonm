@@ -82,9 +82,56 @@ function renderCart(){
         $cartList.appendChild($div);
     });
 
+    let rawTotalCost = cart.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
+    let discountVal = (rawTotalCost * appliedDiscountPercent) / 100;
+    let finalCost = rawTotalCost - discountVal;
+
     $totalItems.textContent = `${totalQty} ta`;
-    $totalPrice.textContent = `$${totalCost.toFixed(2)}`;
+    
+    let $promoDiscountRow = document.getElementById("promoDiscountRow");
+    let $promoDiscountAmount = document.getElementById("promo-discount-amount");
+    if ($promoDiscountRow && $promoDiscountAmount) {
+        if (appliedDiscountPercent > 0) {
+            $promoDiscountRow.style.display = "flex";
+            $promoDiscountAmount.textContent = typeof formatSum === "function" ? `-${formatSum(discountVal)}` : `-${discountVal} so'm`;
+        } else {
+            $promoDiscountRow.style.display = "none";
+        }
+    }
+
+    $totalPrice.textContent = typeof formatSum === "function" ? formatSum(finalCost) : `${finalCost} so'm`;
     $itemsCountBadge.textContent = `${totalQty} ta mahsulot`;
+}
+
+// Promokod Qo'llash Mantiqi
+let appliedDiscountPercent = 0;
+let $promoInput = document.getElementById("promoInput");
+let $applyPromoBtn = document.getElementById("applyPromoBtn");
+let $promoMessage = document.getElementById("promoMessage");
+
+if ($applyPromoBtn && $promoInput) {
+    $applyPromoBtn.addEventListener("click", () => {
+        let code = $promoInput.value.trim().toUpperCase();
+        let discount = typeof validatePromocode === "function" ? validatePromocode(code) : (code === "ODILJON10" ? 10 : 0);
+        
+        if (discount > 0) {
+            appliedDiscountPercent = discount;
+            if ($promoMessage) {
+                $promoMessage.style.display = "block";
+                $promoMessage.style.color = "#10b981";
+                $promoMessage.textContent = `🎉 Tabriklaymiz! "${code}" promokodi orqali ${discount}% chegirma berildi.`;
+            }
+            renderCart();
+        } else {
+            appliedDiscountPercent = 0;
+            if ($promoMessage) {
+                $promoMessage.style.display = "block";
+                $promoMessage.style.color = "#ef4444";
+                $promoMessage.textContent = `❌ Noto'g'ri promokod. (Sinab ko'ring: ODILJON10, UZUM20, VIP50)`;
+            }
+            renderCart();
+        }
+    });
 }
 
 function changeQty(id, delta){

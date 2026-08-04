@@ -62,9 +62,40 @@ function getsingle(item){
     
     let priceFormatted = typeof formatSum === "function" ? formatSum(item.price) : `${item.price} so'm`;
     if (narxi) narxi.innerHTML = `${priceFormatted}`;
-    if (rating) rating.innerHTML = `⭐️ Rating: ${item.rating || 4.9} / 5 (${item.reviewsCount || 12} ta sharh)`;
+    if (rating) rating.innerHTML = `⭐️ Rating: ${item.rating || 4.9} / 5 (${item.reviewsCount || 12} ta sharh) • <span style="color: #10b981; font-weight: 700;">Omborda: ${item.stock || 15} ta bor</span>`;
     if (tarifi) tarifi.innerHTML = `${item.description}`;
+
+    // Variant Pills Render (Colors & Sizes)
+    let $colorSelector = document.getElementById("colorSelector");
+    let $sizeSelector = document.getElementById("sizeSelector");
+
+    if ($colorSelector && item.colors) {
+        $colorSelector.innerHTML = item.colors.map((c, idx) => `
+            <button type="button" class="variant-pill ${idx === 0 ? 'active' : ''}" onclick="selectVariant(this, 'color')" style="padding: 6px 14px; border: 1.5px solid ${idx === 0 ? '#7000ff' : '#cbd5e1'}; background: ${idx === 0 ? '#7000ff' : '#ffffff'}; color: ${idx === 0 ? '#ffffff' : '#1e293b'}; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.2s;">${c}</button>
+        `).join('');
+    }
+
+    if ($sizeSelector && item.sizes) {
+        $sizeSelector.innerHTML = item.sizes.map((s, idx) => `
+            <button type="button" class="variant-pill ${idx === 0 ? 'active' : ''}" onclick="selectVariant(this, 'size')" style="padding: 6px 14px; border: 1.5px solid ${idx === 0 ? '#7000ff' : '#cbd5e1'}; background: ${idx === 0 ? '#7000ff' : '#ffffff'}; color: ${idx === 0 ? '#ffffff' : '#1e293b'}; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.2s;">${s}</button>
+        `).join('');
+    }
 }
+
+window.selectVariant = function(btn, type) {
+    let parent = btn.parentElement;
+    if (!parent) return;
+    parent.querySelectorAll(".variant-pill").forEach(b => {
+        b.style.border = "1.5px solid #cbd5e1";
+        b.style.background = "#ffffff";
+        b.style.color = "#1e293b";
+        b.classList.remove("active");
+    });
+    btn.style.border = "1.5px solid #7000ff";
+    btn.style.background = "#7000ff";
+    btn.style.color = "#ffffff";
+    btn.classList.add("active");
+};
 
 // ================= COMMENTS & REVIEWS LOGIC =================
 function getStoredReviews(){
