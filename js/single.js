@@ -80,6 +80,36 @@ function getsingle(item){
             <button type="button" class="variant-pill ${idx === 0 ? 'active' : ''}" onclick="selectVariant(this, 'size')" style="padding: 6px 14px; border: 1.5px solid ${idx === 0 ? '#7000ff' : '#cbd5e1'}; background: ${idx === 0 ? '#7000ff' : '#ffffff'}; color: ${idx === 0 ? '#ffffff' : '#1e293b'}; border-radius: 20px; font-size: 12.5px; font-weight: 700; cursor: pointer; transition: all 0.2s;">${s}</button>
         `).join('');
     }
+
+    updateCalculatedPrice();
+}
+
+function parseExtraPrice(text) {
+    if (!text) return 0;
+    let match = text.match(/\(\+\s*([\d\s]+)\s*so'?m\)/i) || text.match(/\(\+\s*([\d\s]+)\)/);
+    if (match && match[1]) {
+        let numStr = match[1].replace(/\s+/g, '');
+        return Number(numStr) || 0;
+    }
+    return 0;
+}
+
+function updateCalculatedPrice() {
+    if (!currentProduct) return;
+    let basePrice = currentProduct.price || 0;
+    
+    let extraCost = 0;
+    let activeSizePill = document.querySelector("#sizeSelector .variant-pill.active");
+    if (activeSizePill) {
+        extraCost += parseExtraPrice(activeSizePill.textContent);
+    }
+    
+    let finalPrice = basePrice + extraCost;
+    currentProduct.selectedPrice = finalPrice;
+
+    if (narxi) {
+        narxi.innerHTML = typeof formatSum === "function" ? formatSum(finalPrice) : `${finalPrice} so'm`;
+    }
 }
 
 window.selectVariant = function(btn, type) {
@@ -118,6 +148,9 @@ window.selectVariant = function(btn, type) {
             }, 180);
         }
     }
+
+    // Dinamik Narx O'zgarishi: Xotira/O'lcham tanlanganda qo'shimcha summa avtomatik qo'shiladi!
+    updateCalculatedPrice();
 };
 
 // ================= COMMENTS & REVIEWS LOGIC =================
