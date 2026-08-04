@@ -69,40 +69,48 @@
                     <strong id="statTotalStock">0 ta tovar</strong>
                 </div>
             </div>
+        </div>
+
         <!-- Backend Server Monitoring va Live API Testing Console -->
-        <div style="background: #0d1117; border: 1px solid #30363d; border-radius: 16px; padding: 20px; margin-bottom: 24px;">
-            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
-                <h3 style="color: white; font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
-                    ⚙️ Backend Server Diagnostikasi & REST API Test Konsoli
+        <div class="backend-console-card">
+            <div class="backend-console-header">
+                <h3 class="backend-console-title">
+                    ⚡ Backend Server Diagnostikasi & REST API Test Konsoli
                 </h3>
-                <span style="padding: 6px 14px; background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 20px; font-weight: 700; font-size: 13px; display: inline-flex; align-items: center; gap: 6px;">
-                    🟢 Backend Status: Faol (Node.js REST API Server v2.0)
+                <span class="backend-status-badge">
+                    <span class="pulse-dot"></span> Backend Status: Faol (Node.js REST API Server v2.0)
                 </span>
             </div>
 
-            <p style="color: #94a3b8; font-size: 13.5px; margin-bottom: 16px;">
+            <p class="backend-console-desc">
                 Server orqasida ishlayotgan Node.js REST API va Serverless End-pointlarni jonli ravishda sinab ko'rish uchun quyidagi tugmalarni bosing:
             </p>
 
-            <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px;">
-                <button onclick="testBackendApi('products')" style="padding: 9px 14px; background: #238636; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;">
+            <div class="backend-buttons-group">
+                <button class="backend-btn btn-products" onclick="testBackendApi('products')">
                     🧪 GET /api/products (Mahsulotlar API)
                 </button>
-                <button onclick="testBackendApi('auth')" style="padding: 9px 14px; background: #8957e5; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                <button class="backend-btn btn-auth" onclick="testBackendApi('auth')">
                     🧪 POST /api/auth (JWT Token Auth)
                 </button>
-                <button onclick="testBackendApi('telegram')" style="padding: 9px 14px; background: #0284c7; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                <button class="backend-btn btn-telegram" onclick="testBackendApi('telegram')">
                     🧪 POST /api/telegram (Telegram Bot API)
                 </button>
-                <button onclick="testBackendApi('payment')" style="padding: 9px 14px; background: #d97706; color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 13px; cursor: pointer;">
+                <button class="backend-btn btn-payment" onclick="testBackendApi('payment')">
                     🧪 GET /api/payment (Click / Payme Link)
                 </button>
             </div>
 
             <!-- API Console JSON Output Display -->
-            <pre id="apiConsoleOutput" style="background: #161b22; border: 1px solid #30363d; border-radius: 12px; padding: 14px; color: #a5d6ff; font-family: 'Fira Code', 'Courier New', monospace; font-size: 12.5px; max-height: 220px; overflow-y: auto; white-space: pre-wrap; word-break: break-all;">
-⚡ Backend Server API Konsoli tayyor! Yuqoridagi API larni sinash tugmasini bosing...
-            </pre>
+            <div class="backend-terminal">
+                <div class="terminal-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="terminal-title">node-rest-api@server:~ /api/console</span>
+                </div>
+                <pre id="apiConsoleOutput" class="terminal-body">⚡ Backend Server API Konsoli tayyor! Yuqoridagi API larni sinash tugmasini bosing...</pre>
+            </div>
         </div>
 
         <!-- Buyurtmalarni Boshqarish (Order Status Management) Bo'limi -->
