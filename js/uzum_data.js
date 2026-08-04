@@ -780,6 +780,10 @@ function getStoredUzumProducts() {
     if (initP) {
       p.thumbnail = initP.thumbnail;
       p.images = initP.images;
+      p.price = initP.price;
+      p.oldPrice = initP.oldPrice;
+      p.monthlyPrice = initP.monthlyPrice || Math.round(initP.price / 12);
+      p.discountPercentage = initP.discountPercentage || Math.round(((initP.oldPrice - initP.price) / initP.oldPrice) * 100);
     }
     if (typeof p.stock !== 'number') p.stock = 12 + (p.id % 7);
 
