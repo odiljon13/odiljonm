@@ -24,6 +24,12 @@ if (!savedAdmin || !activeAdminToken) {
 
 function initAdmin(){
     loadedProductsList = typeof getStoredUzumProducts === "function" ? getStoredUzumProducts() : [];
+    // Ensure 1 single image per product in admin panel
+    loadedProductsList.forEach(p => {
+        let singleImg = (p.images && p.images[0]) ? p.images[0] : (p.thumbnail || "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80");
+        p.thumbnail = singleImg;
+        p.images = [singleImg];
+    });
     updateAdminStats();
     renderAdminOrders();
     renderAdminProducts(loadedProductsList);
@@ -237,17 +243,10 @@ if($addProdForm){
         let colorsInput = document.getElementById("apColors") ? document.getElementById("apColors").value.trim() : "";
         let sizesInput = document.getElementById("apSizes") ? document.getElementById("apSizes").value.trim() : "";
         let img1 = document.getElementById("apImg1").value.trim();
-        let img2 = document.getElementById("apImg2") ? document.getElementById("apImg2").value.trim() : "";
         let desc = document.getElementById("apDesc").value.trim();
-
-        let imgList = [img1];
-        if(img2) imgList.push(img2);
 
         let colorsList = colorsInput ? colorsInput.split(",").map(s=>s.trim()).filter(Boolean) : ["Qora", "Oq", "Ko'k"];
         let sizesList = sizesInput ? sizesInput.split(",").map(s=>s.trim()).filter(Boolean) : ["Standart"];
-
-        let colorImagesMap = {};
-        colorsList.forEach((c, idx) => colorImagesMap[c] = imgList[idx % imgList.length]);
 
         let newProd = {
             id: Date.now(),
@@ -262,9 +261,8 @@ if($addProdForm){
             stock: stock,
             colors: colorsList,
             sizes: sizesList,
-            colorImages: colorImagesMap,
             thumbnail: img1,
-            images: imgList,
+            images: [img1],
             description: desc
         };
 
@@ -346,10 +344,8 @@ if($editProdForm){
         loadedProductsList[index].stock = stock;
         loadedProductsList[index].colors = colorsList;
         loadedProductsList[index].sizes = sizesList;
-        loadedProductsList[index].colorImages = colorImagesMap;
         loadedProductsList[index].thumbnail = img1;
-        if(!loadedProductsList[index].images) loadedProductsList[index].images = [img1];
-        else loadedProductsList[index].images[0] = img1;
+        loadedProductsList[index].images = [img1];
         loadedProductsList[index].description = desc;
 
         if (typeof saveUzumProducts === "function") {
