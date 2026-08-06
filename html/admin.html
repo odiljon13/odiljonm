@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uzum Market | Admin Panel</title>
+    <title data-i18n="adminTitle">Uzum Market | Admin Panel</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/admin.css">
+    <script src="../js/i18n.js"></script>
 </head>
 <body>
     <div class="admin-wrapper">
@@ -14,26 +15,42 @@
             <div class="admin-brand">
                 <div class="admin-logo-icon">🍇</div>
                 <div>
-                    <h1>Uzum Admin Panel</h1>
-                    <span class="admin-subtitle">Mahsulotlar Boshqaruvi va Tahrirlash Tizimi</span>
+                    <h1 data-i18n="adminTitle">Uzum Admin Panel</h1>
+                    <span class="admin-subtitle" data-i18n="adminSubtitle">Mahsulotlar Boshqaruvi va Tahrirlash Tizimi</span>
                 </div>
             </div>
 
-            <div class="admin-header-actions" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                <a href="../html/index.html" class="btn-shop-view" style="padding: 10px 16px; background: rgba(255,255,255,0.1); color: white; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 13.5px;">
+            <div class="admin-header-actions" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <!-- 10 Language Selector -->
+                <div class="lang-selector-wrapper" style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                  <span style="font-size: 14px; margin-right: 6px;">🌐</span>
+                  <select class="lang-selector-select" onchange="setLanguage(this.value)" style="background: transparent; color: #fff; border: none; font-weight: 700; font-size: 13px; cursor: pointer; outline: none;">
+                    <option value="uz" style="background: #1e293b; color: #fff;">🇺🇿 O'zbekcha</option>
+                    <option value="ru" style="background: #1e293b; color: #fff;">🇷🇺 Русский</option>
+                    <option value="en" style="background: #1e293b; color: #fff;">🇬🇧 English</option>
+                    <option value="tr" style="background: #1e293b; color: #fff;">🇹🇷 Türkçe</option>
+                    <option value="kk" style="background: #1e293b; color: #fff;">🇰🇿 Қазақша</option>
+                    <option value="ky" style="background: #1e293b; color: #fff;">🇰🇬 Кыргызча</option>
+                    <option value="tg" style="background: #1e293b; color: #fff;">🇹🇯 Тоҷикӣ</option>
+                    <option value="de" style="background: #1e293b; color: #fff;">🇩🇪 Deutsch</option>
+                    <option value="fr" style="background: #1e293b; color: #fff;">🇫🇷 Français</option>
+                    <option value="zh" style="background: #1e293b; color: #fff;">🇨🇳 中文</option>
+                  </select>
+                </div>
+                <a href="../index.html" class="btn-shop-view" style="padding: 10px 16px; background: rgba(255,255,255,0.1); color: white; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 13.5px;" data-i18n="viewShop">
                     🛍 Do'konni ko'rish
                 </a>
-                <button id="exportCsvBtn" style="padding: 10px 14px; background: #10b981; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer;">
+                <button id="exportCsvBtn" style="padding: 10px 14px; background: #10b981; color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer;" data-i18n="exportCsv">
                     📥 Excel (CSV) Eksport
                 </button>
                 <label id="importCsvLabel" style="padding: 10px 14px; background: #3b82f6; color: white; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;">
-                    📤 CSV Import
+                    <span data-i18n="importCsv">📤 CSV Import</span>
                     <input type="file" id="importCsvInput" accept=".csv" style="display: none;">
                 </label>
-                <button id="openAddProdBtn" class="btn-add-user" style="background: linear-gradient(135deg, #7000ff, #8b2cf5);">
+                <button id="openAddProdBtn" class="btn-add-user" style="background: linear-gradient(135deg, #7000ff, #8b2cf5);" data-i18n="addProduct">
                     ➕ Yangi mahsulot qo'shish
                 </button>
-                <button id="adminLogoutBtn" class="btn-admin-logout">
+                <button id="adminLogoutBtn" class="btn-admin-logout" data-i18n="adminLogout">
                     🚪 Chiqish
                 </button>
             </div>

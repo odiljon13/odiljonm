@@ -11,8 +11,12 @@ let $adminLogoutBtn = document.getElementById("adminLogoutBtn");
 
 let loadedProductsList = [];
 
-if (!savedAdmin) {
-    alert("⛔ Kirish taqiqlangan! Ushbu Admin paneliga faqat avtorizatsiyadan o'tgan Admin kirishi mumkin.");
+let activeAdminToken = localStorage.getItem("active_admin_session_token");
+
+if (!savedAdmin || !activeAdminToken) {
+    alert(typeof t === "function" ? t("singleAdminAlert") : "⛔ Kirish taqiqlangan! Tizimda faol Admin mavjud emas yoki 2-admin kirishi taqiqlangan. Tizimga qaytadan kirishingiz kerak.");
+    localStorage.removeItem("admin");
+    localStorage.removeItem("active_admin_session_token");
     window.location.href = "../html/index.html";
 } else {
     initAdmin();
@@ -24,6 +28,17 @@ function initAdmin(){
     renderAdminOrders();
     renderAdminProducts(loadedProductsList);
     setupCsvHandlers();
+
+    if ($adminLogoutBtn) {
+        $adminLogoutBtn.addEventListener("click", () => {
+            if (confirm("Admin paneldan va tizimdan chiqmoqchimisiz?")) {
+                localStorage.removeItem("admin");
+                localStorage.removeItem("active_admin_session_token");
+                alert("Muvaffaqiyatli chiqdingiz! Sahifa yangilanmoqda...");
+                window.location.href = "../html/index.html";
+            }
+        });
+    }
 }
 
 function updateAdminStats(){

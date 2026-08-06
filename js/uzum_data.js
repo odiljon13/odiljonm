@@ -844,11 +844,15 @@ function getStoredUzumProducts() {
       p.sizes = ["Standart To'plam", "Premium Kengaytirilgan (+180 000 so'm)"];
     }
 
+    // Always enforce images strictly matching product title
+    let matchedImgs = getMatchingImagesForTitle(p.title, p.category);
+    p.images = matchedImgs;
+    p.thumbnail = matchedImgs[0];
+
     // Color to Image Mapping object
     p.colorImages = {};
-    let imgs = p.images && p.images.length > 0 ? p.images : [p.thumbnail || "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80"];
     p.colors.forEach((col, cIdx) => {
-      p.colorImages[col] = imgs[cIdx % imgs.length];
+      p.colorImages[col] = matchedImgs[cIdx % matchedImgs.length];
     });
 
     return p;
@@ -856,6 +860,125 @@ function getStoredUzumProducts() {
 
   localStorage.setItem("uzum_products", JSON.stringify(updated));
   return updated;
+}
+
+function getMatchingImagesForTitle(title, category) {
+  let lower = (title || "").toLowerCase();
+  
+  if (lower.includes("redmi") || lower.includes("samsung galaxy") || lower.includes("iphone") || lower.includes("smartfon") || lower.includes("phone")) {
+    if (lower.includes("iphone")) {
+      return [
+        "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=500&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?w=500&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500&auto=format&fit=crop&q=80"
+      ];
+    } else if (lower.includes("samsung")) {
+      return [
+        "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=500&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=500&auto=format&fit=crop&q=80"
+      ];
+    } else {
+      return [
+        "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=80"
+      ];
+    }
+  } else if (lower.includes("airpods") || lower.includes("quloqchin") || lower.includes("headphone") || lower.includes("earphone")) {
+    return [
+      "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1588423771073-b8903fbb85b5?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("krossovka") || lower.includes("poyabzal") || lower.includes("nike") || lower.includes("adidas") || lower.includes("shoes")) {
+    return [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1515955656352-a1fa3ffcd111?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("choynak") || lower.includes("tefal") || lower.includes("kettle")) {
+    return [
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("watch") || lower.includes("soat")) {
+    return [
+      "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("noutbuk") || lower.includes("macbook") || lower.includes("lenovo") || lower.includes("laptop")) {
+    return [
+      "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("atir") || lower.includes("parfum") || lower.includes("yves") || lower.includes("perfume")) {
+    return [
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("changyutgich") || lower.includes("vacuum") || lower.includes("samsung vc")) {
+    return [
+      "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("kofe") || lower.includes("delonghi") || lower.includes("coffee")) {
+    return [
+      "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("krem") || lower.includes("nivea") || lower.includes("cream")) {
+    return [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("sochiq") || lower.includes("towel") || lower.includes("cotton box")) {
+    return [
+      "https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("ryukzak") || lower.includes("sumka") || lower.includes("backpack")) {
+    return [
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("televizor") || lower.includes("tv") || lower.includes("lg 55")) {
+    return [
+      "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1461151304267-38535e780c79?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (lower.includes("planshet") || lower.includes("pad") || lower.includes("ipad")) {
+    return [
+      "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=500&auto=format&fit=crop&q=80"
+    ];
+  }
+
+  // Fallback by category
+  if (category === "Elektronika") {
+    return [
+      "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (category === "Maishiy texnika") {
+    return [
+      "https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (category === "Kiyim-kechak") {
+    return [
+      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1552346154-21d32810aba3?w=500&auto=format&fit=crop&q=80"
+    ];
+  } else if (category === "Go'zallik va parvarish") {
+    return [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500&auto=format&fit=crop&q=80",
+      "https://images.unsplash.com/photo-1541643600914-78b084683601?w=500&auto=format&fit=crop&q=80"
+    ];
+  }
+
+  return [
+    "https://images.unsplash.com/photo-1616627547584-bf28cee262db?w=500&auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=500&auto=format&fit=crop&q=80"
+  ];
 }
 
 function saveUzumProducts(products) {
@@ -880,4 +1003,5 @@ function validatePromocode(code) {
   let cleanCode = code.trim().toUpperCase();
   return validPromocodes[cleanCode] || 0;
 }
+
 

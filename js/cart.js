@@ -182,19 +182,52 @@ window.addEventListener("click", (e)=>{
     }
 });
 
-// Format card inputs smoothly
-document.addEventListener("input", (e)=>{
-    if(e.target.id === "cardNumberInp"){
-        let val = e.target.value.replace(/\D/g, "");
-        val = val.replace(/(.{4})/g, "$1 ").trim();
-        e.target.value = val;
+// Live Bank Card Interactive Updating & Auto Brand Detection
+document.addEventListener("input", (e) => {
+    let $liveCardNumber = document.getElementById("liveCardNumber");
+    let $liveCardHolder = document.getElementById("liveCardHolder");
+    let $liveCardExpiry = document.getElementById("liveCardExpiry");
+    let $liveCardBrandName = document.getElementById("liveCardBrandName");
+
+    if (e.target.id === "cardNumberInp") {
+        let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+        let formatted = val.match(/.{1,4}/g)?.join(' ') || val;
+        e.target.value = formatted;
+        
+        if ($liveCardNumber) {
+            $liveCardNumber.textContent = formatted ? formatted.padEnd(19, '•') : "8600 •••• •••• ••••";
+        }
+        
+        if ($liveCardBrandName) {
+            if (val.startsWith("8600") || val.startsWith("5614")) {
+                $liveCardBrandName.textContent = "💳 UZCARD";
+            } else if (val.startsWith("9860")) {
+                $liveCardBrandName.textContent = "💳 HUMO";
+            } else if (val.startsWith("4")) {
+                $liveCardBrandName.textContent = "💳 VISA";
+            } else if (val.startsWith("5")) {
+                $liveCardBrandName.textContent = "💳 MASTERCARD";
+            } else {
+                $liveCardBrandName.textContent = "💳 BANK CARD";
+            }
+        }
     }
-    if(e.target.id === "cardExpiryInp"){
-        let val = e.target.value.replace(/\D/g, "");
-        if(val.length >= 2){
-            val = val.substring(0,2) + "/" + val.substring(2,4);
+
+    if (e.target.id === "cardHolderInp") {
+        if ($liveCardHolder) {
+            $liveCardHolder.textContent = e.target.value.trim().toUpperCase() || "ODILJON DILSHODBEKOV";
+        }
+    }
+
+    if (e.target.id === "cardExpiryInp") {
+        let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (val.length >= 3) {
+            val = val.substring(0, 2) + '/' + val.substring(2);
         }
         e.target.value = val;
+        if ($liveCardExpiry) {
+            $liveCardExpiry.textContent = val || "12/28";
+        }
     }
 });
 

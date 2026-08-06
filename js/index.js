@@ -41,6 +41,17 @@ function loadProducts() {
 
 loadProducts();
 
+// Logout Handler
+if(lout){
+    lout.addEventListener("click", ()=>{
+        localStorage.removeItem("user");
+        localStorage.removeItem("admin");
+        localStorage.removeItem("active_admin_session_token");
+        let loginUrl = window.location.pathname.includes("/html/") ? "login.html" : "./html/login.html";
+        window.location.href = loginUrl;
+    });
+}
+
 // Dark Theme toggle
 if(localStorage.getItem("theme") === "dark"){
     document.body.classList.add("dark-theme");
@@ -349,6 +360,64 @@ function closePayModal(){
 }
 if($closePaymentModal) $closePaymentModal.addEventListener("click", closePayModal);
 if($cancelPayBtn) $cancelPayBtn.addEventListener("click", closePayModal);
+
+// Live Bank Card Interactive Updating & Auto Brand Detection
+let $cardNumberInp = document.getElementById("cardNumberInp");
+let $cardHolderInp = document.getElementById("cardHolderInp");
+let $cardExpiryInp = document.getElementById("cardExpiryInp");
+
+let $liveCardNumber = document.getElementById("liveCardNumber");
+let $liveCardHolder = document.getElementById("liveCardHolder");
+let $liveCardExpiry = document.getElementById("liveCardExpiry");
+let $liveCardBrandName = document.getElementById("liveCardBrandName");
+
+if ($cardNumberInp) {
+    $cardNumberInp.addEventListener("input", (e) => {
+        let val = e.target.value.replace(/\D/g, '').substring(0, 16);
+        let formatted = val.match(/.{1,4}/g)?.join(' ') || val;
+        e.target.value = formatted;
+        
+        if ($liveCardNumber) {
+            $liveCardNumber.textContent = formatted ? formatted.padEnd(19, '•') : "8600 •••• •••• ••••";
+        }
+        
+        // Brand Detection
+        if ($liveCardBrandName) {
+            if (val.startsWith("8600") || val.startsWith("5614")) {
+                $liveCardBrandName.textContent = "💳 UZCARD";
+            } else if (val.startsWith("9860")) {
+                $liveCardBrandName.textContent = "💳 HUMO";
+            } else if (val.startsWith("4")) {
+                $liveCardBrandName.textContent = "💳 VISA";
+            } else if (val.startsWith("5")) {
+                $liveCardBrandName.textContent = "💳 MASTERCARD";
+            } else {
+                $liveCardBrandName.textContent = "💳 BANK CARD";
+            }
+        }
+    });
+}
+
+if ($cardHolderInp) {
+    $cardHolderInp.addEventListener("input", (e) => {
+        if ($liveCardHolder) {
+            $liveCardHolder.textContent = e.target.value.trim().toUpperCase() || "ODILJON DILSHODBEKOV";
+        }
+    });
+}
+
+if ($cardExpiryInp) {
+    $cardExpiryInp.addEventListener("input", (e) => {
+        let val = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (val.length >= 3) {
+            val = val.substring(0, 2) + '/' + val.substring(2);
+        }
+        e.target.value = val;
+        if ($liveCardExpiry) {
+            $liveCardExpiry.textContent = val || "12/28";
+        }
+    });
+}
 
 window.addEventListener("click", (e)=>{
     if(e.target === $paymentModal) closePayModal();

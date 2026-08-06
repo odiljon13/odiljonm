@@ -84,11 +84,23 @@ send.addEventListener("click", (e) => {
     }
 
     if (user.username === "odiljon" && user.password === "odiljon13") {
+        let activeToken = localStorage.getItem("active_admin_session_token");
+        let activeAdmin = localStorage.getItem("admin");
+
+        if (activeToken && activeAdmin) {
+            showModal("⛔ Kirish taqiqlangan", typeof t === "function" ? t("singleAdminAlert") : "⛔ Diqqat: Tizimda allaqachon boshqa Admin faol! Bitta saytda 2 ta admin yurishi mumkin emas. Oldingi admin chiqish qilishi va sahifani yangilashi lozim.", "error");
+            return;
+        }
+
         closeLoading.className = "loading_parent";
         setTimeout(() => {
             closeLoading.className = "loading_close";
             showModal("Xush kelibsiz", "Siz Admin panelga kirdingiz", "admin");
+            
+            let newToken = "admin-session-" + Date.now();
+            localStorage.setItem("active_admin_session_token", newToken);
             localStorage.setItem("admin", JSON.stringify(user));
+            
             setTimeout(() => {
                 window.location.href = "../html/admin.html";
             }, 1500);

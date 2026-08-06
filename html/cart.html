@@ -3,18 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Savatcha | Odiljon Shop</title>
+    <title data-i18n="cartTitle">Savatcha | Odiljon Shop</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/cart.css">
+    <script src="../js/i18n.js"></script>
 </head>
 <body>
     <header class="header">
-        <h1><a href="../html/index.html" style="text-decoration: none; color: inherit;">odiljon</a></h1>
-        <div class="header-actions">
-            <a href="../html/index.html" class="nav-btn"><i class="bi bi-house-door"></i> Bosh sahifa</a>
-            <button id="logout">Chiqish</button>
+        <h1><a href="../index.html" style="text-decoration: none; color: inherit;">odiljon</a></h1>
+        <div class="header-actions" style="display: flex; gap: 10px; align-items: center;">
+            <!-- 10 Language Selector Dropdown -->
+            <div class="lang-selector-wrapper" style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.25);">
+              <span style="font-size: 14px; margin-right: 6px;">🌐</span>
+              <select class="lang-selector-select" onchange="setLanguage(this.value)" style="background: transparent; color: inherit; border: none; font-weight: 700; font-size: 13px; cursor: pointer; outline: none;">
+                <option value="uz" style="background: #1e293b; color: #fff;">🇺🇿 O'zbekcha</option>
+                <option value="ru" style="background: #1e293b; color: #fff;">🇷🇺 Русский</option>
+                <option value="en" style="background: #1e293b; color: #fff;">🇬🇧 English</option>
+                <option value="tr" style="background: #1e293b; color: #fff;">🇹🇷 Türkçe</option>
+                <option value="kk" style="background: #1e293b; color: #fff;">🇰🇿 Қазақша</option>
+                <option value="ky" style="background: #1e293b; color: #fff;">🇰🇬 Кыргызча</option>
+                <option value="tg" style="background: #1e293b; color: #fff;">🇹🇯 Тоҷикӣ</option>
+                <option value="de" style="background: #1e293b; color: #fff;">🇩🇪 Deutsch</option>
+                <option value="fr" style="background: #1e293b; color: #fff;">🇫🇷 Français</option>
+                <option value="zh" style="background: #1e293b; color: #fff;">🇨🇳 中文</option>
+              </select>
+            </div>
+            <a href="../index.html" class="nav-btn"><i class="bi bi-house-door"></i> Bosh sahifa</a>
+            <button id="logout" data-i18n="logout">Chiqish</button>
         </div>
     </header>
 
@@ -70,24 +87,51 @@
         </div>
     </main>
 
-    <!-- Google Payments Style Checkout Modal -->
+    <!-- Premium Visual Checkout Modal ("Sotib olish maydoni") -->
     <div class="g-pay-overlay" id="paymentModal" style="display: none;">
-      <div class="g-pay-container">
+      <div class="g-pay-container" style="max-width: 520px; border-radius: 24px; padding: 28px; background: #ffffff;">
         <button class="g-pay-close-btn" id="closePaymentModal">&times;</button>
         
-        <div class="g-pay-header">
-          <p class="g-pay-required-note">Barcha maydonlarni to'ldiring.</p>
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 4px;" data-i18n="checkoutTitle">To'lov va rasmiylashtirish</h2>
+          <p style="font-size: 13px; color: #64748b;" data-i18n="fillAllFields">Barcha maydonlarni to'liq to'ldiring.</p>
+        </div>
+
+        <!-- Live Visual Interactive Bank Card Mockup -->
+        <div id="visualCreditCard" style="background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #7000ff 100%); color: white; padding: 22px; border-radius: 18px; margin-bottom: 22px; box-shadow: 0 12px 30px rgba(112, 0, 255, 0.35); position: relative; overflow: hidden; transition: transform 0.3s ease;">
+          <div style="position: absolute; right: -20px; top: -20px; width: 140px; height: 140px; background: rgba(255,255,255,0.06); border-radius: 50%;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 18px;">💳</span>
+              <span id="liveCardBrandName" style="font-size: 13px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; background: rgba(255,255,255,0.2); padding: 3px 10px; border-radius: 20px;">HUMO / UZCARD / VISA</span>
+            </div>
+            <div style="font-size: 11px; opacity: 0.8; font-weight: 700; text-transform: uppercase;">BANK CARD</div>
+          </div>
+          
+          <div id="liveCardNumber" style="font-family: 'JetBrains Mono', monospace; font-size: 20px; font-weight: 700; letter-spacing: 2.5px; margin-bottom: 24px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+            8600 •••• •••• ••••
+          </div>
+          
+          <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+            <div>
+              <div style="font-size: 9px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px;">Karta egasi</div>
+              <div id="liveCardHolder" style="font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">ODILJON DILSHODBEKOV</div>
+            </div>
+            <div>
+              <div style="font-size: 9px; opacity: 0.7; text-transform: uppercase; letter-spacing: 1px;">Amal qiladi</div>
+              <div id="liveCardExpiry" style="font-size: 14px; font-weight: 700; font-family: monospace;">12/28</div>
+            </div>
+          </div>
         </div>
 
         <form class="g-pay-form" id="paymentForm">
           <!-- Card Number -->
           <div class="field-group">
             <label class="outlined-field">
-              <span class="field-label">Номер карты</span>
+              <span class="field-label" data-i18n="cardNumber">Karta raqami</span>
               <div class="field-input-wrapper">
                 <i class="bi bi-credit-card-2-front card-icon"></i>
-                <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required id="cardNumberInp">
-                <i class="bi bi-question-circle help-icon" title="Введите 16 цифр на лицевой стороне карты"></i>
+                <input type="text" placeholder="8600 0000 0000 0000" maxlength="19" required id="cardNumberInp">
               </div>
             </label>
           </div>
@@ -95,14 +139,13 @@
           <!-- MM/YY & CVC -->
           <div class="field-row-2">
             <label class="outlined-field">
-              <span class="field-label">ММ/ГГ</span>
-              <input type="text" placeholder="ММ/ГГ" maxlength="5" required id="cardExpiryInp">
+              <span class="field-label" data-i18n="expiryDate">MM/YY</span>
+              <input type="text" placeholder="12/28" maxlength="5" required id="cardExpiryInp">
             </label>
             <label class="outlined-field">
-              <span class="field-label">CVC-код</span>
+              <span class="field-label" data-i18n="cvcCode">CVC/CVV</span>
               <div class="field-input-wrapper">
-                <input type="password" placeholder="CVC" maxlength="4" required id="cardCvcInp">
-                <i class="bi bi-question-circle help-icon" title="3-значный код безопасности на обратной стороне"></i>
+                <input type="password" placeholder="•••" maxlength="4" required id="cardCvcInp">
               </div>
             </label>
           </div>
@@ -110,92 +153,57 @@
           <!-- Cardholder Name -->
           <div class="field-group">
             <label class="outlined-field">
-              <span class="field-label">Имя владельца карты</span>
+              <span class="field-label" data-i18n="cardHolder">Karta egasining ism-familiyasi</span>
               <input type="text" value="Odiljon Dilshodbekov" required id="cardHolderInp">
             </label>
           </div>
 
-          <!-- Address 1 -->
+          <!-- Address -->
           <div class="field-group">
             <label class="outlined-field">
-              <span class="field-label">Адрес, строка 1</span>
-              <input type="text" placeholder="Коча, уй" required>
+              <span class="field-label" data-i18n="streetAddress">Ko'cha va uy raqami</span>
+              <input type="text" placeholder="Toshkent ko'chasi 12-uy" required id="cardAddressInp">
             </label>
           </div>
 
-          <!-- Apartment / number (optional) -->
-          <div class="field-group with-subtext">
+          <!-- City & Region -->
+          <div class="field-row-2">
             <label class="outlined-field">
-              <span class="field-label">Квартира, номер и т. д.</span>
-              <input type="text" placeholder="">
+              <span class="field-label" data-i18n="city">Shahar / Tuman</span>
+              <input type="text" placeholder="Toshkent shahri" required id="cardCityInp">
             </label>
-            <span class="field-subtext">Необязательно</span>
-          </div>
-
-          <!-- Index (optional) -->
-          <div class="field-group with-subtext">
             <label class="outlined-field">
-              <span class="field-label">Индекс</span>
-              <input type="text" placeholder="">
-            </label>
-            <span class="field-subtext">Необязательно</span>
-          </div>
-
-          <!-- City -->
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Город</span>
-              <input type="text" placeholder="Город / Шахар" required>
-            </label>
-          </div>
-
-          <!-- Oblast (Region dropdown) -->
-          <div class="field-group">
-            <label class="outlined-field">
-              <span class="field-label">Область</span>
-              <select required class="custom-select">
-                <option value="Tashkent City">Ташкент (город)</option>
-                <option value="Tashkent Region">Ташкентская область</option>
-                <option value="Samarkand">Самаркандская область</option>
-                <option value="Fergana">Ферганская область</option>
-                <option value="Andijan">Андижанская область</option>
-                <option value="Namangan">Наманганская область</option>
-                <option value="Bukhara">Бухарская область</option>
-                <option value="Khorezm">Хорезмская область</option>
-                <option value="Kashkadarya">Кашкадарьинская область</option>
-                <option value="Surkhandarya">Сурхандарьинская область</option>
-                <option value="Navoi">Навоийская область</option>
-                <option value="Jizzakh">Джизакская область</option>
-                <option value="Syrdarya">Сырдарьинская область</option>
-                <option value="Karakalpakstan">Республика Каракалпакстан</option>
+              <span class="field-label" data-i18n="region">Viloyat / Hudud</span>
+              <select required class="custom-select" id="cardRegionInp">
+                <option value="Toshkent shahri">Toshkent shahri</option>
+                <option value="Toshkent viloyati">Toshkent viloyati</option>
+                <option value="Samarqand">Samarqand viloyati</option>
+                <option value="Farg'ona">Farg'ona viloyati</option>
+                <option value="Andijon">Andijon viloyati</option>
+                <option value="Namangan">Namangan viloyati</option>
+                <option value="Buxoro">Buxoro viloyati</option>
+                <option value="Xorazm">Xorazm viloyati</option>
+                <option value="Qashqadaryo">Qashqadaryo viloyati</option>
+                <option value="Surxondaryo">Surxondaryo viloyati</option>
+                <option value="Navoiy">Navoiy viloyati</option>
+                <option value="Jizzax">Jizzax viloyati</option>
+                <option value="Sirdaryo">Sirdaryo viloyati</option>
+                <option value="Qoraqalpog'iston">Qoraqalpog'iston Respublikasi</option>
               </select>
             </label>
           </div>
 
-          <!-- Country / Region -->
-          <div class="country-section">
-            <span class="country-label">Страна/регион</span>
-            <strong class="country-name">Узбекистан (UZ)</strong>
-          </div>
-
-          <!-- Google Payments footer disclaimer -->
-          <div class="g-pay-footer-terms">
-            Davom etish orqali siz Google to'lov hisobini yaratasiz hamda 
-            <a href="#" target="_blank">Google Payments foydalanish shartlarini</a> qabul qilasiz. 
-            Siz shuningdek, 
-            <a href="#" target="_blank">Maxfiylik eslatmasiga</a> ham rozilik bildirasiz. 
-            Ushbu hujjatda ma'lumotlaringiz qanday ishlanishi haqida axborot mavjud.
-          </div>
-
           <!-- Submit buttons -->
-          <div class="g-pay-actions">
-            <button type="button" class="btn-cancel" id="cancelPayBtn">Bekor qilish</button>
-            <button type="submit" class="btn-pay">Saqlash va to'lash</button>
+          <div class="g-pay-actions" style="margin-top: 18px; display: flex; gap: 12px;">
+            <button type="button" class="btn-cancel" id="cancelPayBtn" style="flex: 1; padding: 14px; border-radius: 14px;" data-i18n="cancel">Bekor qilish</button>
+            <button type="submit" class="btn-pay" style="flex: 2; padding: 14px; border-radius: 14px; background: linear-gradient(135deg, #7000ff 0%, #00f2fe 100%); font-weight: 800; font-size: 15px;" data-i18n="paySubmit">Tasdiqlash va to'lash</button>
           </div>
         </form>
       </div>
     </div>
 
+    <script src="../js/i18n.js"></script>
+    <script src="../js/uzum_data.js"></script>
     <script src="../js/api_service.js"></script>
     <script src="../js/cart.js"></script>
 </body>
