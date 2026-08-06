@@ -14,22 +14,6 @@
     <header class="header">
         <h1><a href="../index.html" style="text-decoration: none; color: inherit;">odiljon</a></h1>
         <div class="header-actions" style="display: flex; gap: 10px; align-items: center;">
-            <!-- 10 Language Selector Dropdown -->
-            <div class="lang-selector-wrapper" style="display: inline-flex; align-items: center; background: rgba(255,255,255,0.15); padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.25);">
-              <span style="font-size: 14px; margin-right: 6px;">🌐</span>
-              <select class="lang-selector-select" onchange="setLanguage(this.value)" style="background: transparent; color: inherit; border: none; font-weight: 700; font-size: 13px; cursor: pointer; outline: none;">
-                <option value="uz" style="background: #1e293b; color: #fff;">🇺🇿 O'zbekcha</option>
-                <option value="ru" style="background: #1e293b; color: #fff;">🇷🇺 Русский</option>
-                <option value="en" style="background: #1e293b; color: #fff;">🇬🇧 English</option>
-                <option value="tr" style="background: #1e293b; color: #fff;">🇹🇷 Türkçe</option>
-                <option value="kk" style="background: #1e293b; color: #fff;">🇰🇿 Қазақша</option>
-                <option value="ky" style="background: #1e293b; color: #fff;">🇰🇬 Кыргызча</option>
-                <option value="tg" style="background: #1e293b; color: #fff;">🇹🇯 Тоҷикӣ</option>
-                <option value="de" style="background: #1e293b; color: #fff;">🇩🇪 Deutsch</option>
-                <option value="fr" style="background: #1e293b; color: #fff;">🇫🇷 Français</option>
-                <option value="zh" style="background: #1e293b; color: #fff;">🇨🇳 中文</option>
-              </select>
-            </div>
             <a href="../index.html" class="nav-btn"><i class="bi bi-house-door"></i> Bosh sahifa</a>
             <button id="logout" data-i18n="logout">Chiqish</button>
         </div>
@@ -92,9 +76,28 @@
       <div class="g-pay-container" style="max-width: 520px; border-radius: 24px; padding: 28px; background: #ffffff;">
         <button class="g-pay-close-btn" id="closePaymentModal">&times;</button>
         
-        <div style="text-align: center; margin-bottom: 20px;">
-          <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 4px;" data-i18n="checkoutTitle">To'lov va rasmiylashtirish</h2>
-          <p style="font-size: 13px; color: #64748b;" data-i18n="fillAllFields">Barcha maydonlarni to'liq to'ldiring.</p>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid #e2e8f0;">
+          <div>
+            <h2 style="font-size: 20px; font-weight: 800; color: #0f172a; margin-bottom: 4px;" data-i18n="checkoutTitle">To'lov va rasmiylashtirish</h2>
+            <p style="font-size: 13px; color: #64748b; margin: 0;" data-i18n="fillAllFields">Barcha maydonlarni to'liq to'ldiring.</p>
+          </div>
+
+          <!-- 10 Language Selector Dropdown inside Checkout Modal -->
+          <div class="lang-selector-wrapper" style="display: inline-flex; align-items: center; background: #f1f5f9; padding: 4px 10px; border-radius: 20px; border: 1px solid #cbd5e1; margin-right: 28px;">
+            <span style="font-size: 14px; margin-right: 4px;">🌐</span>
+            <select class="lang-selector-select" onchange="setLanguage(this.value)" style="background: transparent; color: #0f172a; border: none; font-weight: 700; font-size: 13px; cursor: pointer; outline: none;">
+              <option value="uz">🇺🇿 O'zbekcha</option>
+              <option value="ru">🇷🇺 Русский</option>
+              <option value="en">🇬🇧 English</option>
+              <option value="tr">🇹🇷 Türkçe</option>
+              <option value="kk">🇰🇿 Қазақша</option>
+              <option value="ky">🇰🇬 Кыргызча</option>
+              <option value="tg">🇹🇯 Тоҷикӣ</option>
+              <option value="de">🇩🇪 Deutsch</option>
+              <option value="fr">🇫🇷 Français</option>
+              <option value="zh">🇨🇳 中文</option>
+            </select>
+          </div>
         </div>
 
         <!-- Live Visual Interactive Bank Card Mockup -->
