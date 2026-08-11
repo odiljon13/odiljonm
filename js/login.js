@@ -110,6 +110,10 @@ send.addEventListener("click", (e) => {
 
     closeLoading.className = "loading_parent";
 
+    let regAuthStr = localStorage.getItem("registeredUserAuth");
+    let regAuth = regAuthStr ? JSON.parse(regAuthStr) : null;
+    let isRegUserMatch = regAuth && regAuth.username === user.username && regAuth.password === user.password;
+
     fetch("https://dummyjson.com/auth/login", {
         method: "POST",
         headers: {
@@ -124,9 +128,10 @@ send.addEventListener("click", (e) => {
         .then((data) => {
             closeLoading.className = "loading_close";
 
-            if (data.accessToken || (user.username === "emilys" && user.password === "emilyspass") || (user.username === "odiljon" && user.password === "odiljon13")) {
+            if (data.accessToken || (user.username === "emilys" && user.password === "emilyspass") || (user.username === "odiljon" && user.password === "odiljon13") || isRegUserMatch) {
                 showModal("Tabriklaymiz", "Siz tizimga muvaffaqiyatli kirdingiz", "success");
-                localStorage.setItem("user", JSON.stringify(user));
+                let loggedInUser = isRegUserMatch ? regAuth.userObj : user;
+                localStorage.setItem("user", JSON.stringify(loggedInUser));
                 setTimeout(() => {
                     window.location.href = "../html/index.html";
                 }, 1500);
@@ -207,6 +212,8 @@ if (sendRegister) {
                 avatar: "https://ui-avatars.com/api/?name=" + encodeURIComponent(regName) + "&background=random"
             };
             
+            let registeredUserAuth = {username: newUser.username, password: regPassword, userObj: newUser};
+            localStorage.setItem("registeredUserAuth", JSON.stringify(registeredUserAuth));
             showModal("Tabriklaymiz", "Muvaffaqiyatli ro'yxatdan o'tdingiz!", "success");
             localStorage.setItem("user", JSON.stringify(newUser));
             
