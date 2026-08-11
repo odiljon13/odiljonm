@@ -217,29 +217,47 @@ if (sendRegister) {
     });
 }
 
-// Social Login Simulation
-function simulateSocialLogin(providerName, defaultUser) {
-    closeLoading.className = "loading_parent";
-    setTimeout(() => {
-        closeLoading.className = "loading_close";
-        showModal("Tasdiqlandi", `Siz ${providerName} orqali muvaffaqiyatli kirdingiz!`, "success");
-        localStorage.setItem("user", JSON.stringify(defaultUser));
-        
-        setTimeout(() => {
-            window.location.href = "../html/index.html";
-        }, 1500);
-    }, 1500);
+// Real-like Social OAuth Simulation with Popup
+function openOAuthPopup(provider) {
+    let url = provider === 'Google' ? '../html/google-auth.html' : '../html/microsoft-auth.html';
+    let width = 450;
+    let height = 600;
+    let left = (window.innerWidth / 2) - (width / 2);
+    let top = (window.innerHeight / 2) - (height / 2);
+    
+    // Open realistic popup window
+    let popup = window.open(
+        url, 
+        `Sign in with ${provider}`, 
+        `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes,status=yes`
+    );
+
+    if (popup) popup.focus();
 }
+
+window.addEventListener('message', (event) => {
+    // Only accept messages from our popup
+    if (event.data && event.data.type === 'OAUTH_SUCCESS') {
+        let user = event.data.user;
+        
+        closeLoading.className = "loading_parent";
+        setTimeout(() => {
+            closeLoading.className = "loading_close";
+            showModal("Tasdiqlandi", `Siz ${user.provider} orqali muvaffaqiyatli kirdingiz!`, "success");
+            localStorage.setItem("user", JSON.stringify(user));
+            
+            setTimeout(() => {
+                window.location.href = "../html/index.html";
+            }, 1500);
+        }, 800);
+    }
+});
 
 let googleLoginBtn = document.getElementById("googleLoginBtn");
 if (googleLoginBtn) {
     googleLoginBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        simulateSocialLogin("Google", {
-            firstName: "Odilxon",
-            email: "odilxon@gmail.com",
-            avatar: "https://lh3.googleusercontent.com/a/ACg8ocIx2GfX25U4bLp1rE2xVv9uH6M2Gv5hD1uX4F0T7bN9=s96-c"
-        });
+        openOAuthPopup('Google');
     });
 }
 
@@ -247,10 +265,6 @@ let microsoftLoginBtn = document.getElementById("microsoftLoginBtn");
 if (microsoftLoginBtn) {
     microsoftLoginBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        simulateSocialLogin("Microsoft", {
-            firstName: "Odilxon (MS)",
-            email: "odilxon@outlook.com",
-            avatar: "https://ui-avatars.com/api/?name=Odilxon+MS&background=00a4ef&color=fff"
-        });
+        openOAuthPopup('Microsoft');
     });
 }
