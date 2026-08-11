@@ -20,9 +20,15 @@
                 <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
             </button>
         </div>
-        <h2>Xush kelibsiz!</h2>
-        <p class="subtitle">Hisobingizga kiring</p>
-        <form action="#">
+        <div class="auth-toggle">
+            <button class="auth-tab active" id="tabLogin">Kirish</button>
+            <button class="auth-tab" id="tabRegister">Ro'yxatdan o'tish</button>
+        </div>
+
+        <h2 id="authTitle">Xush kelibsiz!</h2>
+        <p class="subtitle" id="authSubtitle">Hisobingizga kiring</p>
+        
+        <form action="#" id="loginForm">
             <div class="input-group">
                 <label for="name">Ism kiriting</label>
                 <input type="text" id="name" placeholder="Ismingizni kiriting" class="inpName" required>
@@ -41,9 +47,43 @@
             <button type="submit" id="sendUser">Kirish</button>
         </form>
 
-        <div style="margin-top: 20px; padding: 12px; background: rgba(255,255,255,0.06); border-radius: 10px; font-size: 13px; color: #a1a1aa; line-height: 1.5; border: 1px dashed rgba(255,255,255,0.15);">
-            
-            
+        <form action="#" id="registerForm" style="display: none;">
+            <div class="input-group">
+                <label for="regName">Ism kiriting</label>
+                <input type="text" id="regName" placeholder="Ismingizni kiriting" required>
+            </div>
+
+            <div class="input-group">
+                <label for="regEmail">Email kiriting</label>
+                <input type="email" id="regEmail" placeholder="Emailingizni kiriting" required>
+            </div>
+
+            <div class="input-group">
+                <label for="regPass">Parol kiriting</label>
+                <div class="password-wrapper">
+                    <input type="password" id="regPass" placeholder="Yangi parol kiriting" required>
+                    <button type="button" class="toggle-password-btn" id="toggleRegPasswordBtn" title="Parolni ko'rsatish/yashirish">
+                        <i class="bi bi-eye-slash" id="eyeRegIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" id="sendRegister">Ro'yxatdan o'tish</button>
+        </form>
+
+        <div class="social-auth-divider">
+            <span>Yoki</span>
+        </div>
+
+        <div class="social-login-group">
+            <button class="social-btn google-btn" id="googleLoginBtn">
+                <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google">
+                Google bilan davom etish
+            </button>
+            <button class="social-btn microsoft-btn" id="microsoftLoginBtn">
+                <img src="https://www.svgrepo.com/show/448239/microsoft.svg" alt="Microsoft">
+                Microsoft bilan davom etish
+            </button>
         </div>
     </div>
 

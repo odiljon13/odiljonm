@@ -27,6 +27,27 @@ if(!savedUser){
     localStorage.setItem("user", JSON.stringify(savedUser));
 }
 
+// Display User Profile in Header
+let $userProfileHeader = document.getElementById("userProfileHeader");
+let $userAvatar = document.getElementById("userAvatar");
+let $userNameDisplay = document.getElementById("userNameDisplay");
+
+if ($userProfileHeader && $userAvatar && $userNameDisplay) {
+    if (savedUser.avatar) {
+        $userAvatar.src = savedUser.avatar;
+    } else {
+        // Generate placeholder avatar based on name
+        $userAvatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(savedUser.firstName || savedUser.username)}&background=7000ff&color=fff`;
+    }
+    
+    let displayName = savedUser.firstName || savedUser.username || "Foydalanuvchi";
+    // Check if it's Odiljon (Admin portal protection logic)
+    if (savedUser.username === "odiljon") displayName = "Odiljon (Admin)";
+    
+    $userNameDisplay.textContent = displayName;
+    $userProfileHeader.style.display = "flex";
+}
+
 let allProducts = [];
 
 function loadProducts() {
@@ -424,6 +445,9 @@ if($paymentForm){
         orders.unshift(newOrder);
         localStorage.setItem("order_history", JSON.stringify(orders));
 
+        localStorage.removeItem("cart");
+        updateBadges();
+
         closePayModal();
         if ($paymentForm) $paymentForm.reset();
         showToast("📦 Buyurtmangiz tarixga saqlandi!");
@@ -563,20 +587,22 @@ if ($chatInput) {
     });
 }
 
-// Mobile Header Auto-Hide Logic: Faqat sahifa eng tepasida turganda menyu chiqadi
+// Mobile Header Auto-Hide Logic
 let $headerElem = document.querySelector(".header");
+let lastScrollTop = 0;
 
 if ($headerElem) {
     window.addEventListener("scroll", () => {
         if (window.innerWidth <= 768) {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > 15) {
+            if (scrollTop > lastScrollTop && scrollTop > 50) {
                 // Sahifadan pastga tushilganda -> Menyu yashirinadi
                 $headerElem.style.transform = "translateY(-100%)";
             } else {
-                // Faqat sahifaning eng tepasiga ko'tarilganda -> Menyu qaytib chiqadi
+                // Tepaga chiqilganda yoki eng tepadagina -> Menyu qaytib chiqadi
                 $headerElem.style.transform = "translateY(0)";
             }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
         } else {
             $headerElem.style.transform = "translateY(0)";
         }

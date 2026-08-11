@@ -266,6 +266,44 @@ body {
   background: #6c2bd9;
 }
 
+/* ===== USER PROFILE HEADER ===== */
+.user-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 14px 6px 6px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+body.dark-theme .user-profile-header {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.user-profile-header:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.user-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #7000ff;
+}
+
+.user-name-text {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+body.dark-theme .user-name-text {
+    color: #f8fafc;
+}
+
 /* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .header {
